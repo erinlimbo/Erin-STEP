@@ -31,7 +31,12 @@ function showPicture() {
     var image = document.getElementById("portrait");
     if (image.style.visibility === "visible") {
         image.style.visibility = "hidden";
+        image.style.height = "20px";
+
     } else {
         image.style.visibility = "visible"
+        image.style.height = "440px";
+        image.style.width = "600px";
+
     }
 }

@@ -1,12 +1,17 @@
 body {
     background-color: lightblue;
-}
-
-#page {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-family: 'Chelsea Market', cursive;
 }
+
+a {
+    text-decoration: none;
+}
+
 #header {
     height: 40px;
     width: 100%;
@@ -17,19 +22,51 @@ body {
 .headBox {
     margin: 5px;
     border: 1px solid black;
-    padding:2px;
+    padding: 2px;
 }
 
 #portrait {
     visibility: hidden;
+    padding: 20px;
+    overflow: scroll;
 }
 
 #content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    width: 50%;
 }
 
 #content-container {
-  margin-top: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#bio-container {
+    border-radius: 35px;
+    border: 4px solid black;
+    margin: 5px;
+}
+
+.bio {
+    text-indent: 40px;
+    width: 600px;
+    padding: 20px;
+}
+
+#footer {
+    margin-top: auto;
+}
+.foot {
+    width: 40px;
+    height: 40px;
+    padding: 1px;
 }
