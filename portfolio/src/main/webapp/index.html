@@ -7,12 +7,21 @@
     <script src="script.js"></script>
   </head>
   <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+    <div id="page">
+        <div id="header">
+            <div id="home" class="headBox"> <a href="index.html"> Home </a> </div>
+            <div id="randomPage" class="headBox"> Random Page </div>
+        </div>
+
+        <div id="content">
+            <h1>Erin's Portfolio</h1>
+            <p>This is my portfolio.</p>
+            <p>Click here to see yours truly ;)</p>
+            <button onclick="showPicture()">See me</button>
+            <div id="content-container">
+                <img id="portrait" src="images/portrait.JPG"/>
+            </div>
+        </div>
     </div>
   </body>
 </html>

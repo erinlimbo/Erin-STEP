@@ -1,9 +1,35 @@
+body {
+    background-color: lightblue;
+}
+
+#page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#header {
+    height: 40px;
+    width: 100%;
+    border: 1px solid black;
+    display: flex;
+}
+
+.headBox {
+    margin: 5px;
+    border: 1px solid black;
+    padding:2px;
+}
+
+#portrait {
+    visibility: hidden;
+}
+
 #content {
   margin-left: auto;
   margin-right: auto;
   width: 650px;
 }
 
-#greeting-container {
+#content-container {
   margin-top: 20px;
 }
