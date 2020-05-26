@@ -3,16 +3,47 @@
   <head>
     <meta charset="UTF-8">
     <title>My Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
   <body>
+    <div id="header">
+        <div class="headBox"> <a href="index.html"> Home </a> </div>
+    </div>
+
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+        <h1>Erin's Portfolio</h1>
+        <p>This is my portfolio.</p>
+        <p>Click here to see yours truly :)</p>
+        <button id="picture-button" onclick="showPicture()">See me!</button>
+        <div id="content-container">
+            <div> <img id="portrait" src="images/portrait.JPG"/> </div>
+            <div id="bio-container">
+                <div id="bio"> 
+                    <p> Hey there! Thanks for stopping by! My name is Erin Limbo, 
+                    I am an incoming sophomore studying Computer Science at UC Berkeley. This summer
+                    I will be participitating ing Google's STEP intern program. </p>
+                    <p> Things have changed since the 'Rona came around. I will no longer be working on Google's Mountain View
+                    campus. That was pretty upsetting news. Then, our project got changed form its original plans and now we can 
+                    not use Google's code base. Also upsetting, but nonetheless I am excited for the rest of this summer. I can't wait 
+                    to learn, meet new people, and enjoy my passion to its fullest. </p>
+                </div>
+                <div id="projects">
+                  <h3>
+                      My favorite projects: <button id="project-button" onclick="showProjects()"> See my projects! </button>
+                  </h3>
+                  <ul id="project-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+      <a href="https://www.linkedin.com/in/erinlimbo/"> <img class="foot" src="images/linkedin.png" alt="LinkedIn"/> </a>
+      <a href="https://github.com/erinlimbo"> <img class="foot" src="images/github.png" alt="Github"/> </a>
+
     </div>
   </body>
 </html>
+
+

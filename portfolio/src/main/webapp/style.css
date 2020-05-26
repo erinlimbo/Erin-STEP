@@ -1,9 +1,92 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+body {
+    align-items: center;
+    background-color: #6cc6f5;
+    display: flex;
+    font-family: 'Chelsea Market', cursive;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
 }
 
-#greeting-container {
-  margin-top: 20px;
+a {
+    text-decoration: none;
+}
+
+button {
+    background-color: #42b9f5;
+    border: 2px solid #1175c2;
+    border-radius: 25px;
+    margin: 1px;
+    text-decoration: none;
+    outline: none;
+}
+
+button:hover {
+    transform: translate(4px, 4px) scale(1.10);
+}
+
+#header {
+    border-radius: 3px;
+    border: 4px solid #1175c2;
+    display: flex;
+    height: 40px;
+    width: 100%;
+}
+
+.headBox {
+    border-right: 3px solid #1175c2;
+    margin: 5px;
+    padding: 5px;
+}
+
+#portrait {
+    display: none;
+    height: 400px;
+    overflow: scroll;
+    padding: 20px;
+    width: 620ox;
+}
+
+#content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 25px;
+    width: 50%;
+}
+
+#content-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+#bio-container {
+    margin: 15px;
+}
+
+#bio {
+    border-radius: 35px;
+    border: 4px solid black;
+    padding: 20px;
+    text-indent: 40px;
+    width: 600px;
+}
+
+#projects h3 {
+    padding: 15px;
+}
+
+#footer {
+    margin-top: auto;
+}
+.foot {
+    height: 40px;
+    padding: 1px;
+    width: 40px;
 }
