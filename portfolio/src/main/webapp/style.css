@@ -41,9 +41,9 @@ button:hover {
 
 #portrait {
     display: none;
+    height: 400px;
     overflow: scroll;
     padding: 20px;
-    height: 400px;
     width: 620ox;
 }
 
@@ -52,9 +52,9 @@ button:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 25px;
     margin-left: auto;
     margin-right: auto;
+    padding: 25px;
     width: 50%;
 }
 
@@ -76,8 +76,6 @@ button:hover {
     padding: 20px;
     text-indent: 40px;
     width: 600px;
-    
-    
 }
 
 #projects h3 {
@@ -88,7 +86,7 @@ button:hover {
     margin-top: auto;
 }
 .foot {
-    padding: 1px;
     height: 40px;
+    padding: 1px;
     width: 40px;
 }
