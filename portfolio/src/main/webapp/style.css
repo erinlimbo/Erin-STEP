@@ -1,8 +1,8 @@
 body {
     align-items: center;
     background-color: #6cc6f5;
-    font-family: 'Chelsea Market', cursive;
     display: flex;
+    font-family: 'Chelsea Market', cursive;
     flex-direction: column;
     height: 100%;
     justify-content: center;
@@ -41,8 +41,8 @@ button:hover {
 
 #portrait {
     display: none;
-    padding: 20px;
     overflow: scroll;
+    padding: 20px;
     height: 400px;
     width: 620ox;
 }
