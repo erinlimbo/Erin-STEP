@@ -15,6 +15,16 @@
 /**
  * Adds a random greeting to the page.
  */
+
+
+var projectCounter = 0;
+var projectList = [
+    ["Gitlet", "This project was my favorite and final project for my CS61B class at Berkeley. The gist of the project was to recreate the popular version-control system: Git, but a bit more simplified."],
+    ["Link!", "My first team-developed project, developed during Google's 2019 CSSI program. We developed a web application that determined mutual availaibilites among friends and found events for everyone to hang out using differnt API's."],
+    ["Simon", "My final project in my first coding class. Developed a web application that mimicked the color-sequence memorization game: Simon."]
+    ];
+
+
 function addRandomGreeting() {
   const greetings =
       ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
@@ -28,15 +38,45 @@ function addRandomGreeting() {
 }
 
 function showPicture() {
-    var image = document.getElementById("portrait");
-    if (image.style.visibility === "visible") {
-        image.style.visibility = "hidden";
-        image.style.height = "20px";
+    const portrait = document.getElementById("portrait");
+    const pictureButton = document.getElementById("picture-button")
+    if (portrait.style.display === "block") {
+        portrait.style.display = "none";
+        pictureButton.innerHTML = "See me!";
 
     } else {
-        image.style.visibility = "visible"
-        image.style.height = "440px";
-        image.style.width = "600px";
-
+        portrait.style.display = "block";
+        pictureButton.innerHTML = "Unsee me :(" 
     }
 }
+
+function showProjects() {
+    const projectContainer = document.getElementById("project-list");
+    
+    if (projectCounter < 3) {
+        console.log("hello");
+        let li = document.createElement('li');
+        let bold = document.createElement('b');
+        let desc = document.createElement('p');
+        bold.textContent = projectList[projectCounter][0];
+        li.appendChild(bold);
+        desc.textContent = projectList[projectCounter][1];
+        li.appendChild(desc);
+        projectContainer.appendChild(li)
+        
+    }
+    projectCounter++;
+    if (projectCounter >= 3) {
+        let projectButton = document.getElementById("project-button");
+        projectButton.style.visibility = "hidden";
+    }
+}
+
+
+
+
+
+
+
+
+

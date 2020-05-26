@@ -1,65 +1,86 @@
 body {
-    background-color: lightblue;
+    align-items: center;
+    background-color: #6cc6f5;
+    font-family: 'Chelsea Market', cursive;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 100%;
-    font-family: 'Chelsea Market', cursive;
+    justify-content: center;
 }
 
 a {
     text-decoration: none;
 }
 
+button {
+    background-color: #42b9f5;
+    border: 2px solid #1175c2;
+    border-radius: 25px;
+    margin: 1px;
+    text-decoration: none;
+    outline: none;
+}
+
+button:hover {
+    transform: translate(4px, 4px) scale(1.10);
+}
+
 #header {
+    display: flex;
     height: 40px;
     width: 100%;
-    border: 1px solid black;
-    display: flex;
+    border-radius: 3px;
+    border: 4px solid #1175c2;
 }
 
 .headBox {
     margin: 5px;
-    border: 1px solid black;
-    padding: 2px;
+    border-right: 3px solid #1175c2;
+    padding: 5px;
 }
 
 #portrait {
-    visibility: hidden;
+    display: none;
     padding: 20px;
+    height: 400px;
+    width: 620ox;
     overflow: scroll;
 }
 
 #content {
-    margin-left: auto;
-    margin-right: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 25px;
+    margin-left: auto;
+    margin-right: auto;
     width: 50%;
 }
 
 #content-container {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
+
 #bio-container {
-    border-radius: 35px;
-    border: 4px solid black;
-    margin: 5px;
+    margin: 15px;
 }
 
-.bio {
-    text-indent: 40px;
-    width: 600px;
+#bio {
     padding: 20px;
+    border-radius: 35px;
+    border: 4px solid black;
+    width: 600px;
+    text-indent: 40px;
+    
+}
+
+#projects h3 {
+    padding: 15px;
 }
 
 #footer {
