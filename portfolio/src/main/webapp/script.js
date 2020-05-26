@@ -12,11 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
-
-
 var projectCounter = 0;
 var projectList = [
     ["Gitlet", "This project was my favorite and final project for my CS61B class at Berkeley. The gist of the project was to recreate the popular version-control system: Git, but a bit more simplified."],
@@ -25,6 +20,9 @@ var projectList = [
     ];
 
 
+/**
+ * Adds a random greeting to the page.
+ */
 function addRandomGreeting() {
   const greetings =
       ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
@@ -37,6 +35,9 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
+/** 
+ * Displays/hides portrait picture.
+ */
 function showPicture() {
     const portrait = document.getElementById("portrait");
     const pictureButton = document.getElementById("picture-button")
@@ -50,11 +51,14 @@ function showPicture() {
     }
 }
 
+
+/**
+ * Displays the projects and their descriptions one at a time.
+ */
 function showProjects() {
     const projectContainer = document.getElementById("project-list");
     
     if (projectCounter < 3) {
-        console.log("hello");
         let li = document.createElement('li');
         let bold = document.createElement('b');
         let desc = document.createElement('p');
@@ -68,15 +72,6 @@ function showProjects() {
     projectCounter++;
     if (projectCounter >= 3) {
         let projectButton = document.getElementById("project-button");
-        projectButton.style.visibility = "hidden";
+        projectButton.style.display = "none";
     }
 }
-
-
-
-
-
-
-
-
-
