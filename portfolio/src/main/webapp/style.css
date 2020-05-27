@@ -57,7 +57,19 @@ button:hover {
     height: 400px;
     padding: 20px;
     overflow: scroll;
-    width: 620ox;
+    width: 620px;
+}
+
+.portrait {
+    border-radius: 30px;
+    padding: 20px;
+    width: 30%;
+}
+
+.owen-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 #ruchiportrait {
