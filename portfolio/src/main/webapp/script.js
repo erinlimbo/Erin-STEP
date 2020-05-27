@@ -19,22 +19,6 @@ var projectList = [
     ["Simon (Play now!)", "My final project in my first coding class. Developed a web application that mimicked the color-sequence memorization game: Simon. High score: 52.", "https://codepen.io/erinlimbo/full/qzJdwj"]
     ];
 
-
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
-
 /** 
  * Displays/hides portrait picture.
  */
@@ -50,7 +34,6 @@ function showPicture() {
         pictureButton.innerHTML = "Unsee me :(" 
     }
 }
-
 
 /**
  * Displays the projects and their descriptions one at a time.
@@ -77,4 +60,13 @@ function showProjects() {
         let projectButton = document.getElementById("project-button");
         projectButton.style.display = "none";
     }
+}
+
+/**
+ * Acquire a random name from server and say hello.
+ */
+async function getName() {
+  const response = await fetch('/data');
+  const name = await response.text();
+  document.getElementById('name-container').innerText = name;
 }

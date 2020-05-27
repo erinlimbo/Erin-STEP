@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getName()">
     <div id="header">
         <div class="headBox"> <a href="index.html"> Home </a> </div>
     </div>
 
     <div id="content">
         <h1>Erin's Portfolio</h1>
-        <p>This is my portfolio.</p>
+        <div id="name-container"></div>
         <p>Click here to see yours truly :)</p>
         <button id="picture-button" onclick="showPicture()">See me!</button>
         <div id="content-container">
