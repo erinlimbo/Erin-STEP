@@ -51,6 +51,21 @@ function showPicture() {
     }
 }
 
+/** 
+ * Displays/hides podmates picture.
+ */
+function showPodmatePicture() {
+    const portrait = document.getElementById("ruchiportrait");
+    const pictureButton = document.getElementById("ruchi-button")
+    if (portrait.style.display === "block") {
+        portrait.style.display = "none";
+        pictureButton.innerHTML = "See me!";
+
+    } else {
+        portrait.style.display = "block";
+        pictureButton.innerHTML = "Unsee me :(" 
+    }
+}
 
 /**
  * Displays the projects and their descriptions one at a time.
