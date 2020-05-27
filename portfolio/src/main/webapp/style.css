@@ -60,6 +60,14 @@ button:hover {
     width: 620ox;
 }
 
+#ruchiportrait {
+    border-radius: 15%;
+    display: none;
+    height: 400px;
+    padding: 20px;
+    overflow: scroll;
+    width: 620ox;
+}
 #content {
     align-items: center;
     display: flex;
