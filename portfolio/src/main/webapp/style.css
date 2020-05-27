@@ -91,6 +91,10 @@ button:hover {
     width: 600px;
 }
 
+#projects {
+    width: 560px;
+}
+
 #projects h3 {
     padding: 15px;
 }
