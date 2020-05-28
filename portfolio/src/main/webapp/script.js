@@ -93,3 +93,19 @@ function showProjects() {
         projectButton.style.display = "none";
     }
 }
+
+/**
+ * Acquire a comment from /data and display it.
+ */
+function getComment() {
+    fetch('/data')
+        .then(response => response.json())
+        .then((comments) => {
+            const commentContainer = document.getElementById("comments-container");
+            comments.forEach(comment => {
+                let childDiv = document.createElement("div");
+                childDiv.innerText = "Anon: " + comment;
+                commentContainer.appendChild(childDiv);
+            })
+    });
+}

@@ -21,12 +21,12 @@ public final class Comments {
 
 
     /** Getter method for author. */
-    public long getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
     /** Getter method for comment. */
-    public long getComment() {
+    public String getComment() {
         return comment;
     }
 
