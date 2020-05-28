@@ -3,7 +3,7 @@ package com.google.sps.data;
 import java.util.Date;
 
 /** Class containing the data for comments. */
-public final class Comments {
+public final class Comment {
 
     private final String author;
     private final String comment;
@@ -13,7 +13,7 @@ public final class Comments {
      * @param {String} author Identifies the author of the comment.
      * @param {!String} comment The comment.
      */
-    public Comments(String author, String comment) {
+    public Comment(String author, String comment) {
         this.author = author;
         this.comment = comment;
         this.timeStamp = new Date();

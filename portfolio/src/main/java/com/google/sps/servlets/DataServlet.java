@@ -14,7 +14,7 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.Comments;
+import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,29 +26,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    private List<String> comments = new ArrayList<>();
+  private List<String> comments = new ArrayList<>();
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json;");
-        String json = convertToJson(comments);
-        response.getWriter().println(json);
-    }
+/** 
+ * Convert List object into JSON.
+ * @param {!List} jsonToParse List object to convert into JSON.
+ */
+public static final String convertToJson(List jsonToParse) {
+  Gson gson = new Gson();
+  String json = gson.toJson(jsonToParse);
+  return json;
+}
+
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("application/json;");
+    String json = convertToJson(comments);
+    response.getWriter().println(json);
+  }
 
     
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String userComment = request.getParameter("comment-text");
-        comments.add(userComment);
-        response.sendRedirect("/index.html");
-    }
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String userComment = request.getParameter("comment-text");
+    comments.add(userComment);
+    response.sendRedirect("/index.html");
+  }
 
-    private String convertToJson(List jsonToParse) {
-        Gson gson = new Gson();
-        String json = gson.toJson(jsonToParse);
-        return json;
-    }
 }
+
+
