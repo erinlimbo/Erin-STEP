@@ -29,15 +29,21 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    private List<String> comments = new ArrayList<>(Arrays.asList("hello", "world", "goodbye", "earth"));
+    private List<String> comments = new ArrayList<>();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        String json = convertToJson(comments);
-
         response.setContentType("application/json;");
+        String json = convertToJson(comments);
         response.getWriter().println(json);
+    }
+
+    
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String userComment = request.getParameter("comment-text");
+        comments.add(userComment);
+        response.sendRedirect("/index.html");
     }
 
     private String convertToJson(List jsonToParse) {

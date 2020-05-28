@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getComment()">
+  <body onload="getComments()">
+
     <div id="header">
         <div class="headBox"> <a href="index.html"> Home </a> </div>
     </div>
 
     <div id="comments-container">
-        
+        <div id="comments">
+        </div>
+        <form action="/data" method="POST" >
+            <input type="text" name="comment-text" placeholder="Comment...">
+            <input type="submit" value="Submit Comment"/>
+        </form>
+
     </div>
 
     <div id="content">

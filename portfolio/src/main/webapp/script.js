@@ -97,13 +97,14 @@ function showProjects() {
 /**
  * Acquire a comment from /data and display it.
  */
-function getComment() {
+function getComments() {
     fetch('/data')
         .then(response => response.json())
         .then((comments) => {
-            const commentContainer = document.getElementById("comments-container");
+            const commentContainer = document.getElementById("comments");
             comments.forEach(comment => {
                 let childDiv = document.createElement("div");
+                console.log("js: " + comment);
                 childDiv.innerText = "Anon: " + comment;
                 commentContainer.appendChild(childDiv);
             })
