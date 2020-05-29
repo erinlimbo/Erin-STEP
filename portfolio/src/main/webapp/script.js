@@ -20,26 +20,12 @@ var projectList = [
     ];
 
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
-
 /** 
  * Displays/hides portrait picture.
+ * @param {!String} picture string id that specifies which picture to apply function to.
  */
-function showPicture() {
-    const portrait = document.getElementById("portrait");
+function showPicture(picture) {
+    const portrait = document.getElementById(picture);
     const pictureButton = document.getElementById("picture-button")
     if (portrait.style.display === "block") {
         portrait.style.display = "none";

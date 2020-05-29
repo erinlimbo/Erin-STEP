@@ -24,8 +24,8 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
@@ -92,7 +92,3 @@ public class DataServlet extends HttpServlet {
     datastore.put(commentEntity);
     response.sendRedirect("/index.html");
   }
-
-}
-
-
