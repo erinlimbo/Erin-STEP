@@ -91,3 +91,4 @@ public class DataServlet extends HttpServlet {
     datastore.put(commentEntity);
     response.sendRedirect("/index.html");
   }
+}
