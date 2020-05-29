@@ -38,18 +38,20 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-private int maxComments = 5;
+  /** The max amount of comments that will be displayed. */
+  private int maxComments = 5;
 
-/** 
- * Convert List object into JSON.
- * @param {!List} jsonToParse List object to convert into JSON.
- */
-public static final String convertToJson(List jsonToParse) {
-  Gson gson = new Gson();
-  String json = gson.toJson(jsonToParse);
-  return json;
+  /** 
+   * Convert List object into JSON.
+   * @param {!List} jsonToParse List object to convert into JSON.
+   */
+  private final String convertToJson(List jsonToParse) {
+    Gson gson = new Gson();
+    String json = gson.toJson(jsonToParse);
+    return json;
 }
 
+  /** Read the data from the datastore and write it into /data as json. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comment").addSort("timeStamp", SortDirection.DESCENDING);
@@ -70,22 +72,13 @@ public static final String convertToJson(List jsonToParse) {
             Comment commentObject = new Comment(id, author, comment, timestamp);
             comments.add(commentObject);
     }
-    // for (Entity entity : results.asIterable()) {
-    //   long id = entity.getKey().getId();
-    //   String author = (String) entity.getProperty("author");
-    //   String comment = (String) entity.getProperty("comment");
-    //   String timestamp = (String) entity.getProperty("timeStamp");
-
-    //   Comment commentObject = new Comment(id, author, comment, timestamp);
-    //   comments.add(commentObject);
-    // }
 
     response.setContentType("application/json;");
     String json = convertToJson(comments);
     response.getWriter().println(json);
   }
 
-    
+  /** Send the user created comment to the datastore. */    
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = request.getParameter("comment-text");

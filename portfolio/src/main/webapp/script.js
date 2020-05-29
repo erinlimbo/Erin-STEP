@@ -94,24 +94,28 @@ function showProjects() {
     }
 }
 
+/** Display the comments acquired from the datastore */
+function loadComments(comments) {
+    const commentContainer = document.getElementById("comments");
+    comments.forEach(commentObject => {
+        const childDiv = document.createElement("div");
+        childDiv.innerText = "[" + commentObject.timeStamp + "] " 
+            + commentObject.author + ": " + commentObject.comment;
+        commentContainer.appendChild(childDiv);
+    })
+}
+
 /** Acquire a comment from /data and display it. */
-function getComments() {
-    fetch('/data')
-        .then(response => response.json())
-        .then((comments) => {
-            const commentContainer = document.getElementById("comments");
-            comments.forEach(commentObject => {
-                let childDiv = document.createElement("div");
-                childDiv.innerText = "[" + commentObject.timeStamp + "] " 
-                  + commentObject.author + ": " + commentObject.comment;
-                commentContainer.appendChild(childDiv);
-            })
-    });
+async function getComments() {
+    let response = await fetch('/data');
+    let data = await response.json();
+    loadComments(data);
 }
 
 /** Delete all comments from datastore. */
-function deleteComments() {
-    fetch('/delete-data', {
+async function deleteComments() {
+    let response = await fetch('/delete-data', {
         method: 'POST',
-    }).then(getComments());
+    });
+    getComments();
 }
