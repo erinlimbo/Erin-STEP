@@ -14,6 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -52,8 +55,15 @@ public static final String convertToJson(List jsonToParse) {
     
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userComment = request.getParameter("comment-text");
-    comments.add(userComment);
+    String comment = request.getParameter("comment-text");
+    String author = "anonymous";
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("author", author);
+    commentEntity.setProperty("comment", comment);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
     response.sendRedirect("/index.html");
   }
 
