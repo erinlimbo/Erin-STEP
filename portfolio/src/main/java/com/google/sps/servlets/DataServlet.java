@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -37,6 +38,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+private int maxComments = 5;
+
 /** 
  * Convert List object into JSON.
  * @param {!List} jsonToParse List object to convert into JSON.
@@ -53,17 +56,29 @@ public static final String convertToJson(List jsonToParse) {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
+    List<Entity> resultsList = results.asList(FetchOptions.Builder.withLimit(maxComments));
+    
 
     List<Comment> comments = new ArrayList<>();
-    for (Entity entity : results.asIterable()) {
-      long id = entity.getKey().getId();
-      String author = (String) entity.getProperty("author");
-      String comment = (String) entity.getProperty("comment");
-      String timestamp = (String) entity.getProperty("timeStamp");
+    for (Entity entity : resultsList) {
+            // Entity entity = results.next();
+            long id = entity.getKey().getId();
+            String author = (String) entity.getProperty("author");
+            String comment = (String) entity.getProperty("comment");
+            String timestamp = (String) entity.getProperty("timeStamp");
 
-      Comment commentObject = new Comment(id, author, comment, timestamp);
-      comments.add(commentObject);
+            Comment commentObject = new Comment(id, author, comment, timestamp);
+            comments.add(commentObject);
     }
+    // for (Entity entity : results.asIterable()) {
+    //   long id = entity.getKey().getId();
+    //   String author = (String) entity.getProperty("author");
+    //   String comment = (String) entity.getProperty("comment");
+    //   String timestamp = (String) entity.getProperty("timeStamp");
+
+    //   Comment commentObject = new Comment(id, author, comment, timestamp);
+    //   comments.add(commentObject);
+    // }
 
     response.setContentType("application/json;");
     String json = convertToJson(comments);

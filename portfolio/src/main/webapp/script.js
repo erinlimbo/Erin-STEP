@@ -94,22 +94,24 @@ function showProjects() {
     }
 }
 
-/**
- * Acquire a comment from /data and display it.
- */
+/** Acquire a comment from /data and display it. */
 function getComments() {
     fetch('/data')
         .then(response => response.json())
         .then((comments) => {
-            console.log(comments);
-            console.log(comments[0])
             const commentContainer = document.getElementById("comments");
             comments.forEach(commentObject => {
                 let childDiv = document.createElement("div");
-                console.log("js: " + commentObject);
                 childDiv.innerText = "[" + commentObject.timeStamp + "] " 
                   + commentObject.author + ": " + commentObject.comment;
                 commentContainer.appendChild(childDiv);
             })
     });
+}
+
+/** Delete all comments from datastore. */
+function deleteComments() {
+    fetch('/delete-data', {
+        method: 'POST',
+    }).then(getComments());
 }
