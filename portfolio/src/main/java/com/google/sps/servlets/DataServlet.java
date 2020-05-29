@@ -81,7 +81,6 @@ public class DataServlet extends HttpServlet {
     String comment = request.getParameter("comment-text");
     String author = "anonymous";
     String timeStamp = "11/23/2000";
-    // Date timeStamp = new Date();
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("author", author);
