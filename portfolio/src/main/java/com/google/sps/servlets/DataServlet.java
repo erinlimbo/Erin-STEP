@@ -34,7 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -59,18 +58,16 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     List<Entity> resultsList = results.asList(FetchOptions.Builder.withLimit(maxComments));
-    
 
     List<Comment> comments = new ArrayList<>();
     for (Entity entity : resultsList) {
-            // Entity entity = results.next();
-            long id = entity.getKey().getId();
-            String author = (String) entity.getProperty("author");
-            String comment = (String) entity.getProperty("comment");
-            String timestamp = (String) entity.getProperty("timeStamp");
+      long id = entity.getKey().getId();
+      String author = (String) entity.getProperty("author");
+      String comment = (String) entity.getProperty("comment");
+      String timestamp = (String) entity.getProperty("timeStamp");
 
-            Comment commentObject = new Comment(id, author, comment, timestamp);
-            comments.add(commentObject);
+      Comment commentObject = new Comment(id, author, comment, timestamp);
+      comments.add(commentObject);
     }
 
     response.setContentType("application/json;");
