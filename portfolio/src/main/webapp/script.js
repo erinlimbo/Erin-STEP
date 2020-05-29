@@ -101,11 +101,14 @@ function getComments() {
     fetch('/data')
         .then(response => response.json())
         .then((comments) => {
+            console.log(comments);
+            console.log(comments[0])
             const commentContainer = document.getElementById("comments");
-            comments.forEach(comment => {
+            comments.forEach(commentObject => {
                 let childDiv = document.createElement("div");
-                console.log("js: " + comment);
-                childDiv.innerText = "Anon: " + comment;
+                console.log("js: " + commentObject);
+                childDiv.innerText = "[" + commentObject.timeStamp + "] " 
+                  + commentObject.author + ": " + commentObject.comment;
                 commentContainer.appendChild(childDiv);
             })
     });

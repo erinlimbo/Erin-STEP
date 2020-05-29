@@ -5,19 +5,28 @@ import java.util.Date;
 /** Class containing the data for comments. */
 public final class Comment {
 
+  private final long id;
   private final String author;
   private final String comment;
-  private Date timeStamp;
+  private final String timeStamp;
 
   /**
+   * @param {!id} id The unique identifier for each comment.
    * @param {String} author Identifies the author of the comment.
    * @param {!String} comment The comment.
+   * @param {!Date} timeStamp The time at the instant of initiation.
    */
-  public Comment(String author, String comment) {
+  public Comment(long id, String author, String comment, String timeStamp) {
+    this.id = id;
     this.author = author;
     this.comment = comment;
-    this.timeStamp = new Date();
+    this.timeStamp = timeStamp;
 }
+
+  /** Getter method for id. */
+  public long getId() {
+    return id;
+  }
 
   /** Getter method for author. */
   public String getAuthor() {
@@ -30,7 +39,7 @@ public final class Comment {
   }
 
   /** Getter method for timeStamp. */
-  public Date getTimeStamp() {
+  public String getTimeStamp() {
     return timeStamp;
   }
 }
