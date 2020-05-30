@@ -80,11 +80,28 @@ function showProjects() {
     }
 }
 
-/**
- * Acquire a random name from server and say hello.
- */
-async function getName() {
-  const response = await fetch('/data');
-  const name = await response.text();
-  document.getElementById('name-container').innerText = name;
+/** Display the comments acquired from the datastore */
+function loadComments(comments) {
+    const commentContainer = document.getElementById("comments");
+    comments.forEach(commentObject => {
+        const childDiv = document.createElement("div");
+        childDiv.innerText = "[" + commentObject.timeStamp + "] " 
+            + commentObject.author + ": " + commentObject.comment;
+        commentContainer.appendChild(childDiv);
+    })
+}
+
+/** Acquire a comment from /data and display it. */
+async function getComments() {
+    let response = await fetch('/data');
+    let data = await response.json();
+    loadComments(data);
+}
+
+/** Delete all comments from datastore. */
+async function deleteComments() {
+    let response = await fetch('/delete-data', {
+        method: 'POST',
+    });
+    getComments();
 }
