@@ -39,7 +39,5 @@ public class DeleteData extends HttpServlet {
 
     response.sendRedirect("/index.html");
   }
-
 }
-
 
