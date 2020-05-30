@@ -26,7 +26,7 @@ var projectList = [
  */
 function showPicture(picture) {
     const portrait = document.getElementById(picture);
-    const pictureButton = document.getElementById("picture-button")
+    const pictureButton = document.getElementById(picture + "-button");
     if (portrait.style.display === "block") {
         portrait.style.display = "none";
         pictureButton.innerHTML = "See me!";
@@ -37,21 +37,6 @@ function showPicture(picture) {
     }
 }
 
-/** 
- * Displays/hides podmates picture.
- */
-function showPodmatePicture() {
-    const portrait = document.getElementById("ruchiportrait");
-    const pictureButton = document.getElementById("ruchi-button")
-    if (portrait.style.display === "block") {
-        portrait.style.display = "none";
-        pictureButton.innerHTML = "See me!";
-
-    } else {
-        portrait.style.display = "block";
-        pictureButton.innerHTML = "Unsee me :(" 
-    }
-}
 
 /**
  * Displays the projects and their descriptions one at a time.
