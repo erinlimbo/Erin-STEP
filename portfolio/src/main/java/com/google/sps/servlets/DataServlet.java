@@ -37,18 +37,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  /** Java object converter. */
+  private static final Gson gson = new Gson();
+
   /** The max amount of comments that will be displayed. */
   private int maxComments = 5;
-
-  /** 
-   * Convert List object into JSON.
-   * @param {!List} jsonToParse List object to convert into JSON.
-   */
-  private final String convertToJson(List jsonToParse) {
-    Gson gson = new Gson();
-    String json = gson.toJson(jsonToParse);
-    return json;
-}
 
   /** Read the data from the datastore and write it into /data as json. */
   @Override
@@ -71,7 +64,7 @@ public class DataServlet extends HttpServlet {
     }
 
     response.setContentType("application/json;");
-    String json = convertToJson(comments);
+    String json = gson.toJson(comments);
     response.getWriter().println(json);
   }
 
