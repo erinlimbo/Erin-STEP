@@ -23,6 +23,7 @@ var projectList = [
 /** 
  * Displays/hides portrait picture.
  * @param {!String} picture string id that specifies which picture to apply function to.
+ * @param {!String} picture button id that specifies which button to update.
  */
 function showPicture(picture, button) {
     const portrait = document.getElementById(picture);
