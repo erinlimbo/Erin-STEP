@@ -24,9 +24,9 @@ var projectList = [
  * Displays/hides portrait picture.
  * @param {!String} picture string id that specifies which picture to apply function to.
  */
-function showPicture(picture) {
+function showPicture(picture, button) {
     const portrait = document.getElementById(picture);
-    const pictureButton = document.getElementById(picture + "-button");
+    const pictureButton = document.getElementById(button);
     if (portrait.style.display === "block") {
         portrait.style.display = "none";
         pictureButton.innerHTML = "See me!";
