@@ -11,76 +11,54 @@
 
     <div id="header">
         <div class="headBox"> <a href="index.html"> Home </a> </div>
+        <div class="headBox"> <a href="team.html"> My Team </a> </div>
     </div>
 
-    <div id="comments-container">
-        <div id="comments">
-        </div>
-        <form action="/data" method="POST" autocomplete="off">
-            <input type="text" name="comment-text" placeholder="Comment..."
-                minlength="1" maxlength="5" title="3 characters minimum" required>
-            <input type="submit" value="Submit Comment"/>
-        </form>
-        <button id="delete-comments" onclick="deleteComments()"> Delete Comments </button>
-    </div>
 
-    <div id="content">
-        <h1>Erin's Portfolio</h1>
-        <p>This is my portfolio.</p>
-        <p>Click here to see yours truly :)</p>
-        <button id="picture-button" onclick='showPicture("erin")'>See me!</button>
-        <div id="content-container">
-            <div> <img class="portrait" id="erin" src="images/erin.JPG"/> </div>
-            <div id="bio-container">
-                <div id="bio"> 
-                    <p> Hey there! Thanks for stopping by! My name is Erin Limbo, 
-                    I am an incoming sophomore studying Computer Science at UC Berkeley. This summer
-                    I will be participitating ing Google's STEP intern program. </p>
-                    <p> Things have changed since the 'Rona came around. I will no longer be working on Google's Mountain View
-                    campus. That was pretty upsetting news. Then, our project got changed form its original plans and now we can 
-                    not use Google's code base. Also upsetting, but nonetheless I am excited for the rest of this summer. I can't wait 
-                    to learn, meet new people, and enjoy my passion to its fullest. </p>
-                </div>
-                <div id="projects">
-                  <h3>
-                      My favorite projects: <button id="project-button" onclick="showProjects()"> See my projects! </button>
-                  </h3>
-                  <ul id="project-list"></ul>
-                </div>
-                <div id="cohort" class="podmates-container">
-                  <h2>STEP 2020 Geo Podmates~</h2>
-                  <div id="owen" class="owen-container">
-                    <h4> Owen Zhang</h4>
-                    <p> Owen is a Business + Compsci Joint Degree student at Washington University in St. Louis. He loves skateboarding, playing chess, and random acts of kindness!</p>
-                    <img class="portrait" src="images/owen2.jpg" />
-                  </div>
+    <div id="page">
+        <div id="content">
+            <h1>Erin's Portfolio</h1>
+            <p>This is my portfolio.</p>
+            <p>Click here to see yours truly :)</p>
+            <button id="erin-button" onclick='showPicture("erin", "erin-button")'>See me!</button>
+            <div id="content-container">
+                <div> <img class="portrait" id="erin" src="images/erin.JPG"/> </div>
+                <div class="bio-container">
+                    <div class="bio"> 
+                        <p> Hey there! Thanks for stopping by! My name is Erin Limbo, 
+                        I am an incoming sophomore studying Computer Science at UC Berkeley. This summer
+                        I will be participitating ing Google's STEP intern program. </p>
+                        <p> Things have changed since the 'Rona came around. I will no longer be working on Google's Mountain View
+                        campus. That was pretty upsetting news. Then, our project got changed form its original plans and now we can 
+                        not use Google's code base. Also upsetting, but nonetheless I am excited for the rest of this summer. I can't wait 
+                        to learn, meet new people, and enjoy my passion to its fullest. </p>
+                    </div>
+
+                    <div id="projects">
+                    <h3>
+                        My favorite projects: <button id="project-button" onclick="showProjects()"> See my projects! </button>
+                    </h3>
+                    <ul id="project-list"></ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div id="footer">
-      <a href="https://www.linkedin.com/in/erinlimbo/" target="_blank"> <img class="foot" src="images/linkedin.png" alt="LinkedIn"/></a>
-      <a href="https://github.com/erinlimbo" target="_blank"> <img class="foot" src="images/github.png" alt="Github" /> </a>
 
-    </div>
-
-    <div id="content">
-        <h1>Erin's Podmate: Ruchi</h1>
-        <p>I'm working with Erin this Summer!.</p>
-        <p>Click here to see yours truly :)</p>
-        <button id="ruchi-button" onclick="showPodmatePicture()">See me!</button>
-        <div id="content-container">
-            <div> <img id="ruchiportrait" src="images/ruchi.jpg"/> </div>
-            <div id="bio-container">
-                <div id="bio"> 
-                    <p> Hi! My name is Ruchi Shah, 
-                    I am an incoming junior studying Computer Science at UC Berkeley. This summer
-                    I will be participitating in Google's STEP intern program. </p>
-                    <p> I'm excited to learn about the Google Services Team this summer and collaborate 
-                        with both Erin and Owen on our team project. You can view my personal portfolio over <a href="https://shahruchi-step-2020.appspot.com/"> here. </a> </p>
-                </div>
+            <div id="footer">
+            <a href="https://www.linkedin.com/in/erinlimbo/" target="_blank"> <img class="foot" src="images/linkedin.png" alt="LinkedIn"/></a>
+            <a href="https://github.com/erinlimbo" target="_blank"> <img class="foot" src="images/github.png" alt="Github" /> </a>
             </div>
         </div>
+        <div id="comments-container">
+            <div id="comments"></div>
+            <form action="/data" method="POST" autocomplete="off" id="sendComment">
+                <input type="text" id = "comment-text" name="comment-text" 
+                    placeholder="Comment..." minlength="1" maxlength="120" required> <br/>
+            </form>
+            <input type="submit" value="Submit Comment" form="sendComment"/>
+            <button id="delete-comments" onclick="deleteComments()"> Delete Comments </button>
+        </div>
     </div>
+
+
   </body>
 </html>

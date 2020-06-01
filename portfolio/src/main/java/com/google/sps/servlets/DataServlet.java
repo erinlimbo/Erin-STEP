@@ -41,7 +41,7 @@ public class DataServlet extends HttpServlet {
   private static final Gson gson = new Gson();
 
   /** The max amount of comments that will be displayed. */
-  private int maxComments = 5;
+  private int maxComments = 40;
 
   /** Read the data from the datastore and write it into /data as json. */
   @Override
