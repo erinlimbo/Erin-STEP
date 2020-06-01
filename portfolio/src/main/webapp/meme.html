@@ -5,18 +5,27 @@
     <title>My Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-      <script src="script.js"></script>
     </head>
-    <body>
+    <body onload="fetchBlobstoreUrlAndShowForm()">
+      <script src="script.js"></script>
         <div id="header">
             <div class="headBox"> <a href="index.html"> Home </a> </div>
             <div class="headBox"> <a href="team.html"> My Team </a> </div>
             <div class="headBox"> <a href="meme.html"> Memes </a> </div>
-
         </div>
         <div id="content">
             <h1> Welcome to the Meme Page! </h1>
-            <h2> (I love memes) </h2>
+            <h3> (I love memes) </h3>
+        
+        <div id="upload-box">
+            <p> Upload a meme! </p>
+            <form id="message-form" method="post" enctype="multipart/form-data" style="display:none">
+                <input type="text" name="description" placeholder="write something about this" />
+                <input type="file" name="file" />
+                <br/>
+                <input type="submit" />
+            </form>    
+        </div>
 
         <div id="footer">
             <a href="https://www.linkedin.com/in/erinlimbo/" target="_blank"> <img class="foot" src="images/linkedin.png" alt="LinkedIn"/></a>

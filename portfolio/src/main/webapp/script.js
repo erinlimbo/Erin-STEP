@@ -91,3 +91,16 @@ async function deleteComments() {
     });
     getComments();
 }
+
+/** Fetches the blob at the url. */
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('message-form');
+        messageForm.action = imageUploadUrl;
+        messageForm.style.display = "block";
+      });
+}
