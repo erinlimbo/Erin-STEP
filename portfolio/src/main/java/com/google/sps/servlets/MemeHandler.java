@@ -5,13 +5,25 @@ import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
+import com.google.gson.Gson;
+import com.google.sps.data.Meme;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.annotation.WebServlet;
@@ -20,27 +32,58 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/my-form-handler")
-public class FormHandler extends HttpServlet {
+@WebServlet("/meme-handler")
+public class MemeHandler extends HttpServlet {
 
+  /** Java object converter. */
+  private static final Gson gson = new Gson();
+
+  /** The max amount of memes that will be displayed. */
+  private int maxMemes = 40;
+
+  /** Read the data from the datastore and write it into /meme-handler as json. */
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("Meme").addSort("timeStamp", SortDirection.DESCENDING);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+    // List<Entity> resultsList = results.asList(FetchOptions.Builder.withLimit(maxMemes));
+
+    List<Meme> memes = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+        long id = entity.getKey().getId();
+        String author = (String) entity.getProperty("author");
+        String url = (String) entity.getProperty("url");
+        String description = (String) entity.getProperty("desc");
+        String timestamp = (String) entity.getProperty("timeStamp");
+
+        Meme memeObject = new Meme(id, author, url, description, timestamp);
+        memes.add(memeObject);
+    }
+
+    response.setContentType("application/json;");
+    String json = gson.toJson(memes);
+    response.getWriter().println(json);
+    }
+
+
+    /** Receive a meme and upload its data to the datastore. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
-    // Get the message entered by the user.
-    String message = request.getParameter("message");
+    String description = request.getParameter("message");
 
-    // Get the URL of the image that the user uploaded to Blobstore.
     String imageUrl = getUploadedFileUrl(request, "file");
 
-    // Output some HTML that shows the data the user entered.
-    // A real codebase would probably store these in Datastore.
-    PrintWriter out = response.getWriter();
-    out.println("<p>Here's the image you uploaded:</p>");
-    out.println("<a href=\"" + imageUrl + "\">");
-    out.println("<img src=\"" + imageUrl + "\" />");
-    out.println("</a>");
-    out.println("<p>Here's the text you entered:</p>");
-    out.println(message);
+    Entity memeEntity = new Entity("Meme");
+    memeEntity.setProperty("author", "anonymous");
+    memeEntity.setProperty("url", imageUrl);
+    memeEntity.setProperty("desc", description);
+    memeEntity.setProperty("timeStamp", "11/22/11");
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(memeEntity);
+    response.sendRedirect("/meme.html");
   }
 
   /** Returns a URL that points to the uploaded file, or null if the user didn't upload a file. */

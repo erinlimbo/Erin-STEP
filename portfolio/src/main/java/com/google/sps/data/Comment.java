@@ -14,7 +14,7 @@ public final class Comment {
    * @param {!id} id The unique identifier for each comment.
    * @param {String} author Identifies the author of the comment.
    * @param {!String} comment The comment.
-   * @param {!Date} timeStamp The time at the instant of initiation.
+   * @param {!String} timeStamp The time at the instant of initiation.
    */
   public Comment(long id, String author, String comment, String timeStamp) {
     this.id = id;

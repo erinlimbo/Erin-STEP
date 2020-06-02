@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     </head>
-    <body onload="fetchBlobstoreUrlAndShowForm()">
+    <body onload="loadMemePage()">
       <script src="script.js"></script>
         <div id="header">
             <div class="headBox"> <a href="index.html"> Home </a> </div>
@@ -25,6 +25,10 @@
                     <br/>
                     <input type="submit" />
                 </form>    
+            </div>
+
+            <div id="meme-container">
+                <div id="memes"></div>
             </div>
         </div>
 

@@ -92,6 +92,29 @@ async function deleteComments() {
     getComments();
 }
 
+/** Initiates the meme page */
+async function loadMemePage() {
+    let form = await fetchBlobstoreUrlAndShowForm();
+    let memes = await loadMemes();
+}
+
+/** Loads the memes from the datastore. */
+async function loadMemes() {
+    const memeContainer = document.getElementById("memes");
+    let response = await fetch('/meme-handler');
+    let data = await response.json();
+    data.forEach(memeObject => {
+        console.log(memeObject);
+        const memeDiv = document.createElement("div");
+        const memeImg = document.createElement("img");
+        memeDiv.innerText = "[" + memeObject.timeStamp + "] " 
+            + memeObject.author +": " + memeObject.desc;
+        memeImg.src = memeObject.url; 
+        memeContainer.appendChild(memeDiv);
+        memeDiv.appendChild(memeImg);
+    })
+}
+
 /** Fetches the blob at the url. */
 function fetchBlobstoreUrlAndShowForm() {
   fetch('/blobstore-upload-url')
