@@ -84,10 +84,55 @@ async function getComments() {
     loadComments(data);
 }
 
-/** Delete all comments from datastore. */
+/** Delete all comments from the page and datastore. */
 async function deleteComments() {
     let response = await fetch('/delete-data', {
         method: 'POST',
     });
     getComments();
+}
+
+/** Initiates the meme page */
+async function loadMemePage() {
+    await fetchBlobstoreUrlAndShowForm();
+    await loadMemes();
+}
+
+/** Loads the memes from the page. */
+async function loadMemes() {
+    const memeContainer = document.getElementById("meme-container");
+    const response = await fetch('/meme-handler');
+    const data = await response.json();
+    data.forEach(memeObject => {
+        console.log(memeObject);
+        const memeDiv = document.createElement("div");
+        const memeImg = document.createElement("img");
+        memeDiv.innerText = "[" + memeObject.timeStamp + "] " 
+            + memeObject.author +": " + memeObject.desc;
+        memeImg.src = memeObject.url; 
+        memeContainer.appendChild(memeDiv);
+        memeDiv.appendChild(memeImg);
+        memeImg.classList.add("meme-image");
+    })
+}
+
+/** Delete all memes from the page and datastore. */
+async function deleteMemes() {
+    let response = await fetch('/delete-memes', {
+        method: 'POST',
+    });
+    loadMemes();
+}
+
+/** Fetches the blob at the url. */
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('message-form');
+        messageForm.action = imageUploadUrl;
+        messageForm.style.display = "block";
+      });
 }
