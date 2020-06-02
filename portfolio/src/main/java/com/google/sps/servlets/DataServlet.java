@@ -71,6 +71,7 @@ public class DataServlet extends HttpServlet {
   /** Send the user created comment to the datastore. */    
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // TODO : Incorporate users for author, and Date for timeStamp
     String comment = request.getParameter("comment-text");
     String author = "anonymous";
     String timeStamp = "11/23/2000";

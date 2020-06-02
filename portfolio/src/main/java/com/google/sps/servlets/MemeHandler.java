@@ -77,6 +77,7 @@ public class MemeHandler extends HttpServlet {
     String imageUrl = getUploadedFileUrl(request, "file");
 
     Entity memeEntity = new Entity("Meme");
+    // TODO : Incorporate users for author, and Date for timeStamp
     memeEntity.setProperty("author", "anonymous");
     memeEntity.setProperty("url", imageUrl);
     memeEntity.setProperty("desc", description);
