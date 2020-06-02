@@ -23,13 +23,14 @@
                     <input type="text" name="message" placeholder="write something about this" />
                     <input type="file" name="file" />
                     <br/>
-                    <input type="submit" />
                 </form>    
+                <input type="submit" form="message-form"/>
+
+                <button id="delete-comments" onclick="deleteMemes()"> Delete Comments </button>
+
             </div>
 
-            <div id="meme-container">
-                <div id="memes"></div>
-            </div>
+            <div id="meme-container"></div>
         </div>
 
         <div id="footer">

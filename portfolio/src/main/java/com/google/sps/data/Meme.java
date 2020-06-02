@@ -24,7 +24,7 @@ public final class Meme {
     this.url = url;
     this.desc = desc;
     this.timeStamp = timeStamp;
-}
+  }
 
   /** Getter method for id. */
   public long getId() {

@@ -21,13 +21,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/delete-data")
-public class DeleteData extends HttpServlet {
+@WebServlet("/delete-memes")
+public class DeleteMemes extends HttpServlet {
 
   /** Delete all comments from the datastore. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timeStamp", SortDirection.DESCENDING);
+    Query query = new Query("Meme").addSort("timeStamp", SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -36,6 +36,6 @@ public class DeleteData extends HttpServlet {
         datastore.delete(entity.getKey());
     }
 
-    response.sendRedirect("/index.html");
+    response.sendRedirect("/meme.html");
   }
 }
