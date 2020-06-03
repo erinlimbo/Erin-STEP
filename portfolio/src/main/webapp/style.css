@@ -150,6 +150,10 @@ button:hover {
     width: 426px;
 }
 
+#input-form {
+    display: none;
+}
+
 #cohort-container {
     align-content: center;
     display: flex;

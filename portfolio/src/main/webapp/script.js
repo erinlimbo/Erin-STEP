@@ -66,6 +66,34 @@ function showProjects() {
     }
 }
 
+var logStatus;
+
+/** Initiate the home page */
+async function loadHomePage() {
+    logStatus = (await getLogStatus() == 'true'); 
+    await getComments();
+    if (logStatus) {
+        const inputForm = document.getElementById("input-form");
+        inputForm.style.display = "block";
+    }
+
+
+    // logStatus = (await getLogStatus() == 'true'); 
+    // await getComments();
+    // if (logStatus) {
+    //     const inputForm = document.getElementById("input-form");
+    //     inputForm.style.display = "block";
+    // }
+    
+}
+
+/** Return true iff the user is already logged in. */
+async function getLogStatus() {
+    const response = await fetch('/log');
+    let isLoggedIn = await response.text();
+    return isLoggedIn;
+}
+
 /** Display the comments acquired from the datastore */
 function loadComments(comments) {
     const commentContainer = document.getElementById("comments");
@@ -134,5 +162,7 @@ function fetchBlobstoreUrlAndShowForm() {
         const messageForm = document.getElementById('message-form');
         messageForm.action = imageUploadUrl;
         messageForm.style.display = "block";
+        messageForm.innerHTML = "If you would like to comment, please sign in."
       });
 }
+

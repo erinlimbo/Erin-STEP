@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getComments()">
+  <body onload="loadHomePage()">
 
     <div id="header">
         <div class="headBox"> <a href="index.html"> Home </a> </div>
@@ -50,12 +50,14 @@
         </div>
         <div id="comments-container">
             <div id="comments"></div>
-            <form action="/data" method="POST" autocomplete="off" id="sendComment">
-                <input type="text" id = "comment-text" name="comment-text" 
-                    placeholder="Comment..." minlength="1" maxlength="120" required> <br/>
-            </form>
-            <input type="submit" value="Submit Comment" form="sendComment"/>
-            <button id="delete-comments" onclick="deleteComments()"> Delete Comments </button>
+            <div id="input-form">
+                <form action="/data" method="POST" autocomplete="off" id="sendComment">
+                    <input type="text" id = "comment-text" name="comment-text" 
+                        placeholder="Comment..." minlength="1" maxlength="120" required> <br/>
+                </form>
+                <input type="submit" value="Submit Comment" form="sendComment"/>
+                <button id="delete-comments" onclick="deleteComments()"> Delete Comments </button>
+            </div>
         </div>
     </div>
 
