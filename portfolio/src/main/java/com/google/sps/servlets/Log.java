@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/log")
 public class Log extends HttpServlet {
 
+  /** Write true into the server iff the user is logged in. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
@@ -23,23 +24,12 @@ public class Log extends HttpServlet {
       String urlToRedirectToAfterUserLogsOut = "/index.html";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
 
-    //   response.getWriter().println("<p>Hello " + userEmail + "!</p>");
-    //   response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
-    //   response.getWriter().println("<p>" + logoutUrl + "</p>");
-    response.getWriter().print(logoutUrl);
-
+    response.getWriter().print("true");
     } else {
       String urlToRedirectToAfterUserLogsIn = "/login.html";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
 
-    //   response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
-    //   response.getWriter().println("<p>" + loginUrl + "</p>");
-
       response.getWriter().print("false");
     }
   }
-
-
 }
-
-

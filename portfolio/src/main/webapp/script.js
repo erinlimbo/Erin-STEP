@@ -80,40 +80,23 @@ async function loadHomePage() {
     logStatus = (await getLogStatus() !== 'false'); 
 
     if (logStatus) {
-        link.href = "/logout"
+        link.href = "/_ah/logout?continue=%2F"
         link.innerHTML = "logout";
         log.style.display = "block";
-        console.log("Logged in")
         inputForm.style.display = "block";
     } else {
-        link.href = "/login.html"
+        link.href = "/_ah/login?continue=%2Flogin"
         link.innerHTML = "login"
         log.style.display = "block";
-        console.log("not logged in")
     }
 }
 
-/** Return true iff the user is already logged in. */
+/** Return the contents of the `/log` server. */
 async function getLogStatus() {
     const response = await fetch('/log');
     let isLoggedIn = await response.text();
     return isLoggedIn;
 }
-
-/** Fetches login link for user to login. */
-function login() {
-    fetch('/login', {
-        method: 'POST'
-    })
-        .then(response => {
-            return response.text();
-        })
-        .then(loginUrl => {
-            const loginAnchor = document.getElementById("login");
-            loginAnchor.href = loginUrl;
-        })
-}
-
 
 /** Display the comments acquired from the datastore */
 function loadComments(comments) {
