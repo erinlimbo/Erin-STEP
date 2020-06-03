@@ -70,21 +70,23 @@ var logStatus;
 
 /** Initiate the home page */
 async function loadHomePage() {
+    const inputForm = document.getElementById("input-form");
+    const log = document.getElementById("logging");
+    const link = document.getElementById("log-link");
+
+
     logStatus = (await getLogStatus() == 'true'); 
     await getComments();
     if (logStatus) {
-        const inputForm = document.getElementById("input-form");
+        link.href = "/logout"
+        link.innerHTML = "logout";
+        log.style.display = "block";
         inputForm.style.display = "block";
+    } else {
+        link.href = "/login"
+        link.innerHTML = "login"
+        log.style.display = "block";
     }
-
-
-    // logStatus = (await getLogStatus() == 'true'); 
-    // await getComments();
-    // if (logStatus) {
-    //     const inputForm = document.getElementById("input-form");
-    //     inputForm.style.display = "block";
-    // }
-    
 }
 
 /** Return true iff the user is already logged in. */
@@ -162,7 +164,6 @@ function fetchBlobstoreUrlAndShowForm() {
         const messageForm = document.getElementById('message-form');
         messageForm.action = imageUploadUrl;
         messageForm.style.display = "block";
-        messageForm.innerHTML = "If you would like to comment, please sign in."
       });
 }
 
