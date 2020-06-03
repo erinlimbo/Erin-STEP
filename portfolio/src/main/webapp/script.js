@@ -67,6 +67,8 @@ function showProjects() {
 }
 
 var logStatus;
+var temp;
+
 
 /** Initiate the home page */
 async function loadHomePage() {
@@ -74,18 +76,20 @@ async function loadHomePage() {
     const log = document.getElementById("logging");
     const link = document.getElementById("log-link");
 
-
-    logStatus = (await getLogStatus() == 'true'); 
     await getComments();
+    logStatus = (await getLogStatus() !== 'false'); 
+
     if (logStatus) {
         link.href = "/logout"
         link.innerHTML = "logout";
         log.style.display = "block";
+        console.log("Logged in")
         inputForm.style.display = "block";
     } else {
-        link.href = "/login"
+        link.href = "/login.html"
         link.innerHTML = "login"
         log.style.display = "block";
+        console.log("not logged in")
     }
 }
 
@@ -95,6 +99,21 @@ async function getLogStatus() {
     let isLoggedIn = await response.text();
     return isLoggedIn;
 }
+
+/** Fetches login link for user to login. */
+function login() {
+    fetch('/login', {
+        method: 'POST'
+    })
+        .then(response => {
+            return response.text();
+        })
+        .then(loginUrl => {
+            const loginAnchor = document.getElementById("login");
+            loginAnchor.href = loginUrl;
+        })
+}
+
 
 /** Display the comments acquired from the datastore */
 function loadComments(comments) {
@@ -156,14 +175,13 @@ async function deleteMemes() {
 
 /** Fetches the blob at the url. */
 function fetchBlobstoreUrlAndShowForm() {
-  fetch('/blobstore-upload-url')
-      .then((response) => {
-        return response.text();
-      })
-      .then((imageUploadUrl) => {
-        const messageForm = document.getElementById('message-form');
-        messageForm.action = imageUploadUrl;
-        messageForm.style.display = "block";
-      });
+    fetch('/blobstore-upload-url')
+        .then((response) => {
+            return response.text();
+        })
+        .then((imageUploadUrl) => {
+            const messageForm = document.getElementById('message-form');
+            messageForm.action = imageUploadUrl;
+            messageForm.style.display = "block";
+        });
 }
-

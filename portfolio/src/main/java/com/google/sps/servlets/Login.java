@@ -9,33 +9,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/log")
-public class Log extends HttpServlet {
+@WebServlet("/login")
+public class Login extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.sendRedirect("/login.html");
+  }
+
+   @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      
     UserService userService = UserServiceFactory.getUserService();
 
     response.setContentType("text/html");
 
     if (userService.isUserLoggedIn()) {
       String userEmail = userService.getCurrentUser().getEmail();
-      String urlToRedirectToAfterUserLogsOut = "/index.html";
+      String urlToRedirectToAfterUserLogsOut = "/";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
 
-    //   response.getWriter().println("<p>Hello " + userEmail + "!</p>");
-    //   response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
-    //   response.getWriter().println("<p>" + logoutUrl + "</p>");
-    response.getWriter().print(logoutUrl);
-
+    response.getWriter().println(logoutUrl);
     } else {
-      String urlToRedirectToAfterUserLogsIn = "/login.html";
+      String urlToRedirectToAfterUserLogsIn = "/";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
-
-    //   response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
-    //   response.getWriter().println("<p>" + loginUrl + "</p>");
-
-      response.getWriter().print("false");
+        
+      response.getWriter().print(loginUrl);
     }
   }
 
