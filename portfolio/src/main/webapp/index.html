@@ -16,12 +16,12 @@
     </div>
     
     <div id="page">
-        <div id="content">
+        <div id="content-container">
             <h1>Erin's Portfolio</h1>
             <p>This is my portfolio.</p>
             <p>Click here to see yours truly :)</p>
             <button id="erin-button" onclick='showPicture("erin", "erin-button")'>See me!</button>
-            <div id="content-container">
+            <div id="content">
                 <div> <img class="portrait" id="erin" src="images/erin.JPG"/> </div>
                 <div class="bio-container">
                     <div class="bio"> 
@@ -42,12 +42,9 @@
                     </div>
                 </div>
             </div>
-
-            <div id="footer">
-            <a href="https://www.linkedin.com/in/erinlimbo/" target="_blank"> <img class="foot" src="images/linkedin.png" alt="LinkedIn"/></a>
-            <a href="https://github.com/erinlimbo" target="_blank"> <img class="foot" src="images/github.png" alt="Github" /> </a>
-            </div>
         </div>
+
+
         <div id="comments-container">
             <div id="comments"></div>
             <form action="/data" method="POST" autocomplete="off" id="sendComment">
@@ -60,5 +57,9 @@
     </div>
 
 
+    <div id="footer">
+        <a href="https://www.linkedin.com/in/erinlimbo/" target="_blank"> <img class="foot" src="images/linkedin.png" alt="LinkedIn"/></a>
+        <a href="https://github.com/erinlimbo" target="_blank"> <img class="foot" src="images/github.png" alt="Github" /> </a>
+    </div>
   </body>
 </html>
