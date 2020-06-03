@@ -57,8 +57,6 @@ button:hover {
     width: 100%;
 }
 
-
-
 .portrait {
     border: 5px solid black;
     border-radius: 50%;
@@ -166,18 +164,28 @@ button:hover {
     padding-right: 5px;
 }
 
-
+#upload-box {
+    display: none;
+}
 #meme-container {
+    align-content: center;
+    background-color: white;
     display: flex;
     flex-direction: column;
-    align-content: center;
+    margin: 20px;
 }
 
+.meme-div {
+    border: 3px solid black;
+    margin: 15px;
+    padding: 5px;
+}
 .meme-image {
+    display: flex;
+    flex-direction: column;
     max-height: 600px;
     max-width: 600px;
     min-height: 200px;
     min-width: 200px;
     object-fit: cover;
-
 }
