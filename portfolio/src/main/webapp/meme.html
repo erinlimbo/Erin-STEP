@@ -19,15 +19,13 @@
         
             <div id="upload-box">
                 <p> Upload a meme! </p>
-                <form id="message-form" method="post" enctype="multipart/form-data" style="display:none">
-                    <input type="text" name="message" placeholder="write something about this" />
+                <form id="meme-form" method="post" enctype="multipart/form-data" autocomplete="off">
+                    <input type="text" name="message" placeholder="write something about this" maxlength="120"/>
                     <input type="file" name="file" />
                     <br/>
                 </form>    
-                <input type="submit" form="message-form"/>
-
+                <input type="submit" form="meme-form"/>
                 <button id="delete-comments" onclick="deleteMemes()"> Delete Comments </button>
-
             </div>
 
             <div id="meme-container"></div>
