@@ -8,20 +8,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getComments()">
+  <body onload="loadHomePage()">
 
     <div id="header">
         <div class="headBox"> <a href="index.html"> Home </a> </div>
         <div class="headBox"> <a href="team.html"> My Team </a> </div>
         <div class="headBox"> <a href="meme.html"> Memes </a> </div>
+        <div class="headBox" id="logging"> <a id="log-link"> </a> </div>
     </div>
     <div id="page">
-        <div id="content">
+        <div id="content-container">
             <h1>Erin's Portfolio</h1>
             <p>This is my portfolio.</p>
             <p>Click here to see yours truly :)</p>
             <button id="erin-button" onclick='showPicture("erin", "erin-button")'>See me!</button>
-            <div id="content-container">
+            <div id="content">
                 <div> <img class="portrait" id="erin" src="images/erin.JPG"/> </div>
                 <div class="bio-container">
                     <div class="bio"> 
@@ -42,23 +43,26 @@
                     </div>
                 </div>
             </div>
-
-            <div id="footer">
-            <a href="https://www.linkedin.com/in/erinlimbo/" target="_blank"> <img class="foot" src="images/linkedin.png" alt="LinkedIn"/></a>
-            <a href="https://github.com/erinlimbo" target="_blank"> <img class="foot" src="images/github.png" alt="Github" /> </a>
-            </div>
         </div>
+
+
         <div id="comments-container">
             <div id="comments"></div>
-            <form action="/data" method="POST" autocomplete="off" id="sendComment">
-                <input type="text" id = "comment-text" name="comment-text" 
-                    placeholder="Comment..." minlength="1" maxlength="120" required> <br/>
-            </form>
-            <input type="submit" value="Submit Comment" form="sendComment"/>
-            <button id="delete-comments" onclick="deleteComments()"> Delete Comments </button>
+            <div id="input-form">
+                <form action="/data" method="POST" autocomplete="off" id="sendComment">
+                    <input type="text" id = "comment-text" name="comment-text" 
+                        placeholder="Comment..." minlength="1" maxlength="120" required> <br/>
+                </form>
+                <input type="submit" value="Submit Comment" form="sendComment"/>
+                <button id="delete-comments" onclick="deleteComments()"> Delete Comments </button>
+            </div>
         </div>
     </div>
 
 
+    <div id="footer">
+        <a href="https://www.linkedin.com/in/erinlimbo/" target="_blank"> <img class="foot" src="images/linkedin.png" alt="LinkedIn"/></a>
+        <a href="https://github.com/erinlimbo" target="_blank"> <img class="foot" src="images/github.png" alt="Github" /> </a>
+    </div>
   </body>
 </html>

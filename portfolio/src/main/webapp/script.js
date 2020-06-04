@@ -66,6 +66,35 @@ function showProjects() {
     }
 }
 
+
+/** Initiate the home page */
+async function loadHomePage() {
+    const inputForm = document.getElementById("input-form");
+    const log = document.getElementById("logging");
+    const link = document.getElementById("log-link");
+
+    await getComments();
+    const logStatus = (await getLogStatus() !== 'false'); 
+
+    if (logStatus) {
+        link.href = "/_ah/logout?continue=%2F"
+        link.innerHTML = "logout";
+        log.style.display = "block";
+        inputForm.style.display = "block";
+    } else {
+        link.href = "/_ah/login?continue=%2F"
+        link.innerHTML = "login"
+        log.style.display = "block";
+    }
+}
+
+/** Return the contents of the `/log` server. */
+async function getLogStatus() {
+    const response = await fetch('/log');
+    const isLoggedIn = await response.text();
+    return isLoggedIn;
+}
+
 /** Display the comments acquired from the datastore */
 function loadComments(comments) {
     const commentContainer = document.getElementById("comments");
@@ -107,13 +136,23 @@ async function loadMemes() {
     data.forEach(memeObject => {
         const memeDiv = document.createElement("div");
         const memeImg = document.createElement("img");
-        memeDiv.innerHTML = "[" + memeObject.timeStamp + "] " 
-            + memeObject.author +": " + memeObject.desc
-            + '<i class="fa fa-trash-o trash"></i>';
+        const memeDesc = document.createElement("p");
+
+
         memeImg.src = memeObject.url; 
-        memeContainer.appendChild(memeDiv);
-        memeDiv.appendChild(memeImg);
         memeImg.classList.add("meme-image");
+        memeDesc.innerHTML = memeObject.desc
+            + '<i class="fa fa-trash-o trash"></i>';
+
+        memeDiv.innerHTML = "[" + memeObject.timeStamp + "] " 
+            + memeObject.author + ":";
+
+        memeDiv.appendChild(memeImg);
+        memeDiv.appendChild(memeDesc);
+
+        memeDiv.classList.add("meme-div");
+        memeContainer.appendChild(memeDiv);
+
     })
 }
 
@@ -127,13 +166,14 @@ async function deleteMemes() {
 
 /** Fetches the blob at the url. */
 function fetchBlobstoreUrlAndShowForm() {
-  fetch('/blobstore-upload-url')
-      .then((response) => {
-        return response.text();
-      })
-      .then((imageUploadUrl) => {
-        const messageForm = document.getElementById('message-form');
-        messageForm.action = imageUploadUrl;
-        messageForm.style.display = "block";
-      });
+    fetch('/blobstore-upload-url')
+        .then(response => {
+            return response.text();
+        })
+        .then(imageUploadUrl => {
+            const uploadBox = document.getElementById('upload-box');
+            const memeForm = document.getElementById('meme-form');
+            memeForm.action = imageUploadUrl;
+            uploadBox.style.display = "block";
+        });
 }
