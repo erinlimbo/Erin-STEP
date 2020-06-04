@@ -20,15 +20,8 @@ public class Log extends HttpServlet {
     response.setContentType("text/html");
 
     if (userService.isUserLoggedIn()) {
-      String userEmail = userService.getCurrentUser().getEmail();
-      String urlToRedirectToAfterUserLogsOut = "/index.html";
-      String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-
-    response.getWriter().print("true");
+      response.getWriter().print("true");
     } else {
-      String urlToRedirectToAfterUserLogsIn = "/login.html";
-      String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
-
       response.getWriter().print("false");
     }
   }

@@ -66,9 +66,6 @@ function showProjects() {
     }
 }
 
-var logStatus;
-var temp;
-
 
 /** Initiate the home page */
 async function loadHomePage() {
@@ -77,7 +74,7 @@ async function loadHomePage() {
     const link = document.getElementById("log-link");
 
     await getComments();
-    logStatus = (await getLogStatus() !== 'false'); 
+    const logStatus = (await getLogStatus() !== 'false'); 
 
     if (logStatus) {
         link.href = "/_ah/logout?continue=%2F"
@@ -85,7 +82,7 @@ async function loadHomePage() {
         log.style.display = "block";
         inputForm.style.display = "block";
     } else {
-        link.href = "/_ah/login?continue=%2Flogin"
+        link.href = "/_ah/login?continue=%2F"
         link.innerHTML = "login"
         log.style.display = "block";
     }
@@ -94,7 +91,7 @@ async function loadHomePage() {
 /** Return the contents of the `/log` server. */
 async function getLogStatus() {
     const response = await fetch('/log');
-    let isLoggedIn = await response.text();
+    const isLoggedIn = await response.text();
     return isLoggedIn;
 }
 
