@@ -104,15 +104,22 @@ async function loadMemes() {
     const response = await fetch('/meme-handler');
     const data = await response.json();
     data.forEach(memeObject => {
-        console.log(memeObject);
         const memeDiv = document.createElement("div");
         const memeImg = document.createElement("img");
-        memeDiv.innerText = "[" + memeObject.timeStamp + "] " 
-            + memeObject.author +": " + memeObject.desc;
+        const memeDesc = document.createElement("p");
+
         memeImg.src = memeObject.url; 
-        memeContainer.appendChild(memeDiv);
-        memeDiv.appendChild(memeImg);
         memeImg.classList.add("meme-image");
+
+        memeDiv.innerText = "[" + memeObject.timeStamp + "] " 
+            + memeObject.author + ":";
+        memeDesc.innerHTML = memeObject.desc;
+        memeDiv.appendChild(memeImg);
+        memeDiv.appendChild(memeDesc);
+
+        memeDiv.classList.add("meme-div");
+        memeContainer.appendChild(memeDiv);
+
     })
 }
 
@@ -126,13 +133,14 @@ async function deleteMemes() {
 
 /** Fetches the blob at the url. */
 function fetchBlobstoreUrlAndShowForm() {
-  fetch('/blobstore-upload-url')
-      .then((response) => {
-        return response.text();
-      })
-      .then((imageUploadUrl) => {
-        const messageForm = document.getElementById('message-form');
-        messageForm.action = imageUploadUrl;
-        messageForm.style.display = "block";
-      });
+    fetch('/blobstore-upload-url')
+        .then(response => {
+            return response.text();
+        })
+        .then(imageUploadUrl => {
+            const uploadBox = document.getElementById('upload-box');
+            const memeForm = document.getElementById('meme-form');
+            memeForm.action = imageUploadUrl;
+            uploadBox.style.display = "block";
+        });
 }
