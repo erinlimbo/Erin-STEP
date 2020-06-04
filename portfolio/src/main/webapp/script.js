@@ -66,6 +66,35 @@ function showProjects() {
     }
 }
 
+
+/** Initiate the home page */
+async function loadHomePage() {
+    const inputForm = document.getElementById("input-form");
+    const log = document.getElementById("logging");
+    const link = document.getElementById("log-link");
+
+    await getComments();
+    const logStatus = (await getLogStatus() !== 'false'); 
+
+    if (logStatus) {
+        link.href = "/_ah/logout?continue=%2F"
+        link.innerHTML = "logout";
+        log.style.display = "block";
+        inputForm.style.display = "block";
+    } else {
+        link.href = "/_ah/login?continue=%2F"
+        link.innerHTML = "login"
+        log.style.display = "block";
+    }
+}
+
+/** Return the contents of the `/log` server. */
+async function getLogStatus() {
+    const response = await fetch('/log');
+    const isLoggedIn = await response.text();
+    return isLoggedIn;
+}
+
 /** Display the comments acquired from the datastore */
 function loadComments(comments) {
     const commentContainer = document.getElementById("comments");
