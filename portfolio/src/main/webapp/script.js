@@ -71,7 +71,8 @@ function loadComments(comments) {
     const commentContainer = document.getElementById("comments");
     comments.forEach(commentObject => {
         const childDiv = document.createElement("div");
-        childDiv.innerText = "[" + commentObject.timeStamp + "] " 
+        childDiv.innerHTML = '<i class="fa fa-trash-o trash"></i>'
+            + "[" + commentObject.timeStamp + "] " 
             + commentObject.author + ": " + commentObject.comment;
         commentContainer.appendChild(childDiv);
     })
@@ -104,11 +105,11 @@ async function loadMemes() {
     const response = await fetch('/meme-handler');
     const data = await response.json();
     data.forEach(memeObject => {
-        console.log(memeObject);
         const memeDiv = document.createElement("div");
         const memeImg = document.createElement("img");
-        memeDiv.innerText = "[" + memeObject.timeStamp + "] " 
-            + memeObject.author +": " + memeObject.desc;
+        memeDiv.innerHTML = "[" + memeObject.timeStamp + "] " 
+            + memeObject.author +": " + memeObject.desc
+            + '<i class="fa fa-trash-o trash"></i>';
         memeImg.src = memeObject.url; 
         memeContainer.appendChild(memeDiv);
         memeDiv.appendChild(memeImg);
