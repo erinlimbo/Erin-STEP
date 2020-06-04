@@ -57,7 +57,6 @@ button:hover {
     justify-content: center;
     position: relative;
     width: 100%;
-
 }
 
 .page-div {
@@ -175,6 +174,7 @@ button:hover {
 #upload-box {
     display: none;
 }
+
 #meme-container {
     align-content: center;
     background-color: white;
@@ -188,9 +188,12 @@ button:hover {
     margin: 15px;
     padding: 5px;
 }
+
 .meme-image {
     display: flex;
     flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
     max-height: 600px;
     max-width: 600px;
     min-height: 200px;
