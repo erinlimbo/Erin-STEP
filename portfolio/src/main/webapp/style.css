@@ -139,7 +139,6 @@ button:hover {
     position: absolute;
     top: 0;
     width: 430px;
-    z-index: -1;
 }
 
 #comments {
@@ -208,4 +207,20 @@ button:hover {
     min-height: 200px;
     min-width: 200px;
     object-fit: cover;
+}
+
+.trash {
+    background-color: white;
+    border: none;
+    font-size: 22px !important;
+}
+
+#container {
+    display: flex;
+    flex-direction: row;
+}
+
+.columns {
+    display: flex;
+    flex-direction: column;
 }
