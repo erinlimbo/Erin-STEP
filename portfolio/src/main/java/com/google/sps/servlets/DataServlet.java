@@ -21,6 +21,9 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -42,6 +45,9 @@ public class DataServlet extends HttpServlet {
 
   /** The max amount of comments that will be displayed. */
   private int maxComments = 40;
+
+  /** User service that contains the information of the current user. */
+  UserService userService = UserServiceFactory.getUserService();
 
   /** Read the data from the datastore and write it into /data as json. */
   @Override
@@ -71,9 +77,12 @@ public class DataServlet extends HttpServlet {
   /** Send the user created comment to the datastore. */    
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // TODO : Incorporate users for author, and Date for timeStamp
+
+    User currentUser = userService.getCurrentUser();
+
+    //TODO: Incorporate Timestamp
     String comment = request.getParameter("comment-text");
-    String author = "anonymous";
+    String author = currentUser.getUserId().split("@",1)[0];
     String timeStamp = "11/23/2000";
 
     Entity commentEntity = new Entity("Comment");
