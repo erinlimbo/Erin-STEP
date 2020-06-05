@@ -162,7 +162,7 @@ async function loadMemes() {
 
 /** Delete this element. */
 async function deleteThis(elementType, elementId) {
-    let response = await fetch('/delete', {
+    await fetch('/delete', {
         method: 'POST',
         headers: {
             'Content-type': "application/json",
@@ -176,10 +176,10 @@ async function deleteThis(elementType, elementId) {
 
 /** Delete all comments from the page and datastore. */
 async function deleteComments() {
-    let response = await fetch('/delete-data', {
+    await fetch('/delete-data', {
         method: 'POST',
     });
-    response.then(getComments());
+    getComments();
 }
 
 /** Delete all memes from the page and datastore. */
