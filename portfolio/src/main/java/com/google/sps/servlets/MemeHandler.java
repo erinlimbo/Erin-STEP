@@ -12,6 +12,9 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
@@ -40,6 +43,9 @@ public class MemeHandler extends HttpServlet {
 
   /** The max amount of memes that will be displayed. */
   private int maxMemes = 40;
+
+  /** User service that contains the information of the current user. */
+  private UserService userService = UserServiceFactory.getUserService();
 
   /** Read the data from the datastore and write it into /meme-handler as json. */
   @Override
@@ -71,14 +77,15 @@ public class MemeHandler extends HttpServlet {
     /** Receive a meme and upload its data to the datastore. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    User currentUser = userService.getCurrentUser();
 
+    String author = currentUser.getEmail().split("@", 2)[0];
     String description = request.getParameter("message");
-
     String imageUrl = getUploadedFileUrl(request, "file");
 
     Entity memeEntity = new Entity("Meme");
-    // TODO : Incorporate users for author, and Date for timeStamp
-    memeEntity.setProperty("author", "anonymous");
+    // TODO : Incorporate Date for timeStamp
+    memeEntity.setProperty("author", author);
     memeEntity.setProperty("url", imageUrl);
     memeEntity.setProperty("desc", description);
     memeEntity.setProperty("timeStamp", "11/22/11");

@@ -47,7 +47,7 @@ public class DataServlet extends HttpServlet {
   private int maxComments = 40;
 
   /** User service that contains the information of the current user. */
-  UserService userService = UserServiceFactory.getUserService();
+  private UserService userService = UserServiceFactory.getUserService();
 
   /** Read the data from the datastore and write it into /data as json. */
   @Override
@@ -82,9 +82,10 @@ public class DataServlet extends HttpServlet {
 
     //TODO: Incorporate Timestamp
     String comment = request.getParameter("comment-text");
-    String author = currentUser.getUserId().split("@",1)[0];
+    String author = currentUser.getEmail().split("@", 2)[0];
     String timeStamp = "11/23/2000";
 
+    System.out.println(author);
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("author", author);
     commentEntity.setProperty("comment", comment);
