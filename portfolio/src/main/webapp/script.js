@@ -104,7 +104,8 @@ function loadComments(comments) {
 
         icon.innerHTML = '<i class="fa fa-trash-o"></i>';
         icon.classList.add("trash");
-        icon.setAttribute( "onClick", "deleteThis(" + commentObject.id + ")");
+        icon.setAttribute( "onClick", 
+            'deleteThis("Comment", ' + commentObject.id + ')');
 
         childDiv.textContent = "[" + commentObject.timeStamp + "] " 
             + commentObject.author + ": " + commentObject.comment;
@@ -145,7 +146,8 @@ async function loadMemes() {
 
         icon.innerHTML = '<i class="fa fa-trash-o"></i>';
         icon.classList.add("trash");
-        icon.setAttribute( "onClick", "deleteThis(" + memeObject.id+ ")");
+        icon.setAttribute( "onClick", 
+            'deleteThis("Meme", ' + memeObject.id + ')');
         memeDiv.innerHTML = "[" + memeObject.timeStamp + "] " 
             + memeObject.author + ":";
         memeDiv.appendChild(memeImg);
@@ -159,8 +161,17 @@ async function loadMemes() {
 }
 
 /** Delete this element. */
-function deleteThis(id) {
-    console.log(id);
+async function deleteThis(elementType, elementId) {
+    let response = await fetch('/delete', {
+        method: 'POST',
+        headers: {
+            'Content-type': "application/json",
+        },
+        body: JSON.stringify({
+            type: elementType, 
+            id: elementId
+        }),
+    });
 }
 
 /** Delete all comments from the page and datastore. */
@@ -168,9 +179,8 @@ async function deleteComments() {
     let response = await fetch('/delete-data', {
         method: 'POST',
     });
-    getComments();
+    response.then(getComments());
 }
-
 
 /** Delete all memes from the page and datastore. */
 async function deleteMemes() {
