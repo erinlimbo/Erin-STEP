@@ -100,8 +100,17 @@ function loadComments(comments) {
     const commentContainer = document.getElementById("comments");
     comments.forEach(commentObject => {
         const childDiv = document.createElement("div");
-        childDiv.innerText = "[" + commentObject.timeStamp + "] " 
+        const icon = document.createElement("button");
+
+        icon.innerHTML = '<i class="fa fa-trash-o"></i>';
+        icon.classList.add("trash");
+        icon.setAttribute( "onClick", 
+            'deleteThis("Comment", ' + commentObject.id + ')');
+
+        childDiv.textContent = "[" + commentObject.timeStamp + "] " 
             + commentObject.author + ": " + commentObject.comment;
+        childDiv.appendChild(icon);     
+   
         commentContainer.appendChild(childDiv);
     })
 }
@@ -113,13 +122,6 @@ async function getComments() {
     loadComments(data);
 }
 
-/** Delete all comments from the page and datastore. */
-async function deleteComments() {
-    let response = await fetch('/delete-data', {
-        method: 'POST',
-    });
-    getComments();
-}
 
 /** Initiates the meme page */
 async function loadMemePage() {
@@ -135,21 +137,49 @@ async function loadMemes() {
     data.forEach(memeObject => {
         const memeDiv = document.createElement("div");
         const memeImg = document.createElement("img");
+        const icon = document.createElement("button");
         const memeDesc = document.createElement("p");
 
         memeImg.src = memeObject.url; 
         memeImg.classList.add("meme-image");
+        memeDesc.innerHTML = memeObject.desc
 
-        memeDiv.innerText = "[" + memeObject.timeStamp + "] " 
+        icon.innerHTML = '<i class="fa fa-trash-o"></i>';
+        icon.classList.add("trash");
+        icon.setAttribute( "onClick", 
+            'deleteThis("Meme", ' + memeObject.id + ')');
+        memeDiv.innerHTML = "[" + memeObject.timeStamp + "] " 
             + memeObject.author + ":";
-        memeDesc.innerHTML = memeObject.desc;
         memeDiv.appendChild(memeImg);
         memeDiv.appendChild(memeDesc);
+        memeDesc.appendChild(icon);
 
         memeDiv.classList.add("meme-div");
         memeContainer.appendChild(memeDiv);
 
     })
+}
+
+/** Delete this element. */
+async function deleteThis(elementType, elementId) {
+    await fetch('/delete', {
+        method: 'POST',
+        headers: {
+            'Content-type': "application/json",
+        },
+        body: JSON.stringify({
+            type: elementType, 
+            id: elementId
+        }),
+    });
+}
+
+/** Delete all comments from the page and datastore. */
+async function deleteComments() {
+    await fetch('/delete-data', {
+        method: 'POST',
+    });
+    getComments();
 }
 
 /** Delete all memes from the page and datastore. */

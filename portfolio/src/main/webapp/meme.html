@@ -5,6 +5,7 @@
     <title>My Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body onload="loadMemePage()">
       <script src="script.js"></script>
@@ -13,7 +14,7 @@
             <div class="headBox"> <a href="team.html"> My Team </a> </div>
             <div class="headBox"> <a href="meme.html"> Memes </a> </div>
         </div>
-        <div id="content">
+        <div id="content-container">
             <h1> Welcome to the Meme Page! </h1>
             <h3> (I love memes) </h3>
         
@@ -25,7 +26,7 @@
                     <br/>
                 </form>    
                 <input type="submit" form="meme-form"/>
-                <button id="delete-comments" onclick="deleteMemes()"> Delete Comments </button>
+                <button id="delete-comments" onclick="deleteMemes()"> Delete Memes </button>
             </div>
 
             <div id="meme-container"></div>
