@@ -85,7 +85,6 @@ public class DataServlet extends HttpServlet {
     String author = currentUser.getEmail().split("@", 2)[0];
     String timeStamp = "11/23/2000";
 
-    System.out.println(author);
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("author", author);
     commentEntity.setProperty("comment", comment);
