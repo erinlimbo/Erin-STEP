@@ -47,7 +47,7 @@ public class MemeHandler extends HttpServlet {
   private int maxMemes = 40;
 
   /** User service that contains the information of the current user. */
-  private UserService userService = UserServiceFactory.getUserService();
+  private final UserService userService = UserServiceFactory.getUserService();
 
   /** Date formatter. */
   private final SimpleDateFormat timeFormat = new SimpleDateFormat("EEE, MMM d, yyy", Locale.US);
@@ -87,10 +87,10 @@ public class MemeHandler extends HttpServlet {
     String author = currentUser.getEmail().split("@", 2)[0];
     String description = request.getParameter("message");
     String imageUrl = getUploadedFileUrl(request, "file");
+    // Gives current time
     Date timeStamp = new Date();
 
     Entity memeEntity = new Entity("Meme");
-    // TODO : Incorporate Date for timeStamp
     memeEntity.setProperty("author", author);
     memeEntity.setProperty("url", imageUrl);
     memeEntity.setProperty("desc", description);

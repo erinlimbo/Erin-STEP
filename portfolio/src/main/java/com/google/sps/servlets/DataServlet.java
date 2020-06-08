@@ -49,7 +49,7 @@ public class DataServlet extends HttpServlet {
   private int maxComments = 40;
 
   /** User service that contains the information of the current user. */
-  private UserService userService = UserServiceFactory.getUserService();
+  private final UserService userService = UserServiceFactory.getUserService();
 
   /** Date formatter. */
   private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
@@ -87,6 +87,7 @@ public class DataServlet extends HttpServlet {
 
     String comment = request.getParameter("comment-text");
     String author = currentUser.getEmail().split("@", 2)[0];
+    // Gives current time
     Date timeStamp = new Date();
 
     Entity commentEntity = new Entity("Comment");
