@@ -50,7 +50,7 @@ public class MemeHandler extends HttpServlet {
   private UserService userService = UserServiceFactory.getUserService();
 
   /** Date formatter. */
-  private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+  private final SimpleDateFormat timeFormat = new SimpleDateFormat("EEE, MMM d, yyy", Locale.US);
 
   /** Read the data from the datastore and write it into /meme-handler as json. */
   @Override
