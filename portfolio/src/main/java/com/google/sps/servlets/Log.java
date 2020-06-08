@@ -24,8 +24,6 @@ public class Log extends HttpServlet {
     /** Information to be sent about the user's log status. */
     JsonObject jsonObject = new JsonObject();
 
-    response.setContentType("text/html");
-
     if (userService.isUserLoggedIn()) {
       String logoutUrl = userService.createLogoutURL("/");
 

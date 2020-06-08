@@ -92,7 +92,6 @@ async function loadHomePage() {
 async function getLogStatus() {
     const response = await fetch('/log');
     const logStatus = await response.json();
-    console.log(logStatus)
     return logStatus;
 }
 
