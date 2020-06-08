@@ -12,6 +12,9 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
@@ -23,8 +26,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,10 +46,16 @@ public class MemeHandler extends HttpServlet {
   /** The max amount of memes that will be displayed. */
   private int maxMemes = 40;
 
+  /** User service that contains the information of the current user. */
+  private final UserService userService = UserServiceFactory.getUserService();
+
+  /** Date formatter. */
+  private final SimpleDateFormat timeFormat = new SimpleDateFormat("EEE, MMM d, yyy", Locale.US);
+
   /** Read the data from the datastore and write it into /meme-handler as json. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Meme").addSort("timeStamp", SortDirection.DESCENDING);
+    Query query = new Query("Meme").addSort("timeStamp", SortDirection.ASCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -56,7 +67,7 @@ public class MemeHandler extends HttpServlet {
         String author = (String) entity.getProperty("author");
         String url = (String) entity.getProperty("url");
         String description = (String) entity.getProperty("desc");
-        String timestamp = (String) entity.getProperty("timeStamp");
+        String timestamp = (String) timeFormat.format(entity.getProperty("timeStamp"));
 
         Meme memeObject = new Meme(id, author, url, description, timestamp);
         memes.add(memeObject);
@@ -71,17 +82,19 @@ public class MemeHandler extends HttpServlet {
     /** Receive a meme and upload its data to the datastore. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    User currentUser = userService.getCurrentUser();
 
+    String author = currentUser.getEmail().split("@", 2)[0];
     String description = request.getParameter("message");
-
     String imageUrl = getUploadedFileUrl(request, "file");
+    // Gives current time
+    Date timeStamp = new Date();
 
     Entity memeEntity = new Entity("Meme");
-    // TODO : Incorporate users for author, and Date for timeStamp
-    memeEntity.setProperty("author", "anonymous");
+    memeEntity.setProperty("author", author);
     memeEntity.setProperty("url", imageUrl);
     memeEntity.setProperty("desc", description);
-    memeEntity.setProperty("timeStamp", "11/22/11");
+    memeEntity.setProperty("timeStamp", timeStamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(memeEntity);
