@@ -74,25 +74,26 @@ async function loadHomePage() {
     const link = document.getElementById("log-link");
 
     await getComments();
-    const logStatus = (await getLogStatus() !== 'false'); 
+    const logStatus = await getLogStatus();
+    const isLoggedIn = logStatus.loggedIn;
 
-    if (logStatus) {
-        link.href = "/_ah/logout?continue=%2F"
+    if (isLoggedIn) {
         link.innerHTML = "logout";
         log.style.display = "block";
         inputForm.style.display = "block";
     } else {
-        link.href = "/_ah/login?continue=%2F"
         link.innerHTML = "login"
         log.style.display = "block";
     }
+    link.href = logStatus.url
 }
 
 /** Return the contents of the `/log` server. */
 async function getLogStatus() {
     const response = await fetch('/log');
-    const isLoggedIn = await response.text();
-    return isLoggedIn;
+    const logStatus = await response.json();
+    console.log(logStatus)
+    return logStatus;
 }
 
 /** Display the comments acquired from the datastore */
