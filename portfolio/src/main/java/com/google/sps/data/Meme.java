@@ -1,7 +1,5 @@
 package com.google.sps.data;
 
-import java.util.Date;
-
 /** Class containing the data for Memes. */
 public final class Meme {
 
@@ -12,8 +10,8 @@ public final class Meme {
   private final String timeStamp;
 
   /**
-   * @param {!id} id The unique identifier for each meme.
-   * @param {String} author Identifies the author of the meme.
+   * @param {!String} id The unique identifier for each meme.
+   * @param {!String} author Identifies the author of the meme.
    * @param {!String} url The url that the image is stored at.
    * @param {!String} desc The description of the meme
    * @param {!String} timeStamp The time at the instant of initiation.

@@ -1,7 +1,5 @@
 package com.google.sps.data;
 
-import java.util.Date;
-
 /** Class containing the data for comments. */
 public final class Comment {
 

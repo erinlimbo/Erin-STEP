@@ -26,8 +26,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,10 +49,13 @@ public class MemeHandler extends HttpServlet {
   /** User service that contains the information of the current user. */
   private UserService userService = UserServiceFactory.getUserService();
 
+  /** Date formatter. */
+  private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+
   /** Read the data from the datastore and write it into /meme-handler as json. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Meme").addSort("timeStamp", SortDirection.DESCENDING);
+    Query query = new Query("Meme").addSort("timeStamp", SortDirection.ASCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -62,7 +67,7 @@ public class MemeHandler extends HttpServlet {
         String author = (String) entity.getProperty("author");
         String url = (String) entity.getProperty("url");
         String description = (String) entity.getProperty("desc");
-        String timestamp = (String) entity.getProperty("timeStamp");
+        String timestamp = (String) timeFormat.format(entity.getProperty("timeStamp"));
 
         Meme memeObject = new Meme(id, author, url, description, timestamp);
         memes.add(memeObject);
@@ -82,13 +87,14 @@ public class MemeHandler extends HttpServlet {
     String author = currentUser.getEmail().split("@", 2)[0];
     String description = request.getParameter("message");
     String imageUrl = getUploadedFileUrl(request, "file");
+    Date timeStamp = new Date();
 
     Entity memeEntity = new Entity("Meme");
     // TODO : Incorporate Date for timeStamp
     memeEntity.setProperty("author", author);
     memeEntity.setProperty("url", imageUrl);
     memeEntity.setProperty("desc", description);
-    memeEntity.setProperty("timeStamp", "11/22/11");
+    memeEntity.setProperty("timeStamp", timeStamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(memeEntity);
