@@ -55,7 +55,7 @@ public class MemeHandler extends HttpServlet {
   /** Read the data from the datastore and write it into /meme-handler as json. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Meme").addSort("timeStamp", SortDirection.ASCENDING);
+    Query query = new Query("Meme").addSort("timeStamp", SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
