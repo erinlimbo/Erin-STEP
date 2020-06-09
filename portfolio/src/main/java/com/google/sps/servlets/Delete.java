@@ -6,7 +6,6 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyRange;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;;
@@ -20,8 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/delete")
 public class Delete extends HttpServlet {
-
-  private Gson gson = new Gson();
 
   /** Delete the element of the given key id */
   @Override
