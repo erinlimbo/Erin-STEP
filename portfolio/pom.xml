@@ -47,7 +47,7 @@
         <version>2.2.0</version>
         <configuration>
           <!-- TODO: set project ID. -->
-          <deploy.projectId>erinlimbo-step-2020</deploy.projectId>
+          <deploy.projectId>erinlimbo-step-2020-279820</deploy.projectId>
           <deploy.version>1</deploy.version>
         </configuration>
       </plugin>
