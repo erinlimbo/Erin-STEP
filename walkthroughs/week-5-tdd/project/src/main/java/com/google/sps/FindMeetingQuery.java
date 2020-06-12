@@ -41,7 +41,7 @@ public final class FindMeetingQuery {
     // Sort unavailable times by their start times.
     Collections.sort(unavailableTimes);
 
-    //Loop through unavailable times to find potential meeting times
+    // Loop through unavailable times to find potential meeting times
     for (int i = 0; i < unavailableTimes.size(); i++) {
       TimeRange time = unavailableTimes.get(i);
 
@@ -73,7 +73,7 @@ public final class FindMeetingQuery {
 
     end = TimeRange.END_OF_DAY;
 
-    if (request.getDuration() <= freeTime()) {
+    if (request.getDuration() <= freeTime(start, end)) {
       meetingTimes.add(TimeRange.fromStartEnd(start, end, true));
     }
     return new ArrayList<TimeRange>(meetingTimes);
@@ -82,6 +82,8 @@ public final class FindMeetingQuery {
   /** 
     * Return true iff any person in {@code inEvents} are contained in
     * {@code required}.
+    * @param inEvents list of people that are in an event.
+    * @param required list of people that are required to attend the requested meeting.
     */
   public boolean checkRequired(Collection<String> inEvents, Collection<String> required) {
     return !Collections.disjoint(inEvents, required);
@@ -89,7 +91,9 @@ public final class FindMeetingQuery {
 
 
   /**
-    * Return the amount of freeTime in between {@code start and {@code end}.
+    * Return the amount of freeTime in between {@code start} and {@code end}.
+    * @param start The start time.
+    * @param end The end time.
     */
   public int freeTime(int start, int end) {
       return end - start;
