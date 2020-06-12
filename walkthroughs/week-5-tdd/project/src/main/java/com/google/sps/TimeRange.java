@@ -46,9 +46,13 @@ public final class TimeRange implements Comparable<TimeRange>{
     }
   };
 
+  /** 
+    * Compare {@code TimeRange} by their start times. 
+    */
+  @Override
   public int compareTo(TimeRange timeRange) {
     return this.start > timeRange.start ? 1 : this.start < timeRange.start ? -1 : 0;
-    }
+  }
 
   private final int start;
   private final int duration;

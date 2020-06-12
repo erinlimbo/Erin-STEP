@@ -29,9 +29,9 @@ public final class FindMeetingQuery {
     Collection<TimeRange> meetingTimes = new LinkedHashSet<>();
     int start = TimeRange.START_OF_DAY;
     int end = TimeRange.END_OF_DAY;
-    int freeTime;
     List<TimeRange> unavailableTimes = new ArrayList<>();
 
+    // Add event time to unavailable times if the event contains a required person.
     for (Event event : events) {
         if (!checkRequired(event.getAttendees(), request.getAttendees())) {
             continue;
@@ -42,6 +42,7 @@ public final class FindMeetingQuery {
     // Sort unavailable times by their start times.
     Collections.sort(unavailableTimes);
 
+    //Loop through unavailable times to find potential meeting times
     for (int i = 0; i < unavailableTimes.size(); i++) {
       TimeRange time = unavailableTimes.get(i);
 
@@ -58,43 +59,40 @@ public final class FindMeetingQuery {
         }
       }
 
-      /** If the event starts in the beginin of the day, make the 
-        * first possible start at the end of this event. 
-        */
+      // If the event starts in the beggining of the day, make the 
+      // first possible start at the end of this event. 
       if (time.start() == 0) {
         start = time.end();
       }
       end = time.start();
-      freeTime = end - start;
 
-      if (freeTime > 0 && request.getDuration() <= freeTime) {
+      if (freeTime(start, end) > 0 && request.getDuration() <= freeTime(start, end)) {
         meetingTimes.add(TimeRange.fromStartEnd(start, end, false));
       }
-
       start = time.end();
     }
 
     end = TimeRange.END_OF_DAY;
 
-    if (request.getDuration()<= end - start) {
+    if (request.getDuration() <= freeTime()) {
       meetingTimes.add(TimeRange.fromStartEnd(start, end, true));
     }
     return new ArrayList<TimeRange>(meetingTimes);
-    // return meetingTimes;
-    // throw new UnsupportedOperationException("TODO: Implement this method.");
   }
 
-  /** Return true iff any person in {@code inEvents} are contained in
-    * {@code required}. *
+  /** 
+    * Return true iff any person in {@code inEvents} are contained in
+    * {@code required}.
     */
   public boolean checkRequired(Collection<String> inEvents, Collection<String> required) {
-      for (String person : inEvents) {
-          if (required.contains(person)) {
-              return true;
-          }
-      }
-      return false;
+    return !Collections.disjoint(inEvents, required);
   }
 
 
+  /**
+    * Return the amount of freeTime in between {@code start and {@code end}.
+    */
+  public int freeTime(int start, int end) {
+      return end - start;
+  }
 }
