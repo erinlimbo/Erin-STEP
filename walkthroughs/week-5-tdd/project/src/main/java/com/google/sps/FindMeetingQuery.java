@@ -25,11 +25,10 @@ import java.util.List;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    // Collection<TimeRange> meetingTimes = new HashSet<>();
+    List<TimeRange> unavailableTimes = new ArrayList<>();
     Collection<TimeRange> meetingTimes = new LinkedHashSet<>();
     int start = TimeRange.START_OF_DAY;
-    int end = TimeRange.END_OF_DAY;
-    List<TimeRange> unavailableTimes = new ArrayList<>();
+    int end;
 
     // Add event time to unavailable times if the event contains a required person.
     for (Event event : events) {
