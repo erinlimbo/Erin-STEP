@@ -52,30 +52,38 @@ public class MemeHandler extends HttpServlet {
   /** Date formatter. */
   private final SimpleDateFormat timeFormat = new SimpleDateFormat("EEE, MMM d, yyy", Locale.US);
 
+  /** This Blobstore Service. */
+  private final BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+
+  /** Get the datastore. */
+  private final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+
   /** Read the data from the datastore and write it into /meme-handler as json. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Meme").addSort("timeStamp", SortDirection.DESCENDING);
+    BlobKey blobKey = new BlobKey(request.getParameter("blob-key"));
+    blobstoreService.serve(blobKey, response);
+    // Query query = new Query("Meme").addSort("timeStamp", SortDirection.DESCENDING);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
-    List<Entity> resultsList = results.asList(FetchOptions.Builder.withLimit(maxMemes));
+    // PreparedQuery results = datastore.prepare(query);
+    // List<Entity> resultsList = results.asList(FetchOptions.Builder.withLimit(maxMemes));
 
-    List<Meme> memes = new ArrayList<>();
-    for (Entity entity : resultsList) {
-        long id = entity.getKey().getId();
-        String author = (String) entity.getProperty("author");
-        String url = (String) entity.getProperty("url");
-        String description = (String) entity.getProperty("desc");
-        String timestamp = (String) timeFormat.format(entity.getProperty("timeStamp"));
+    // List<Meme> memes = new ArrayList<>();
+    // for (Entity entity : resultsList) {
+    //     long id = entity.getKey().getId();
+    //     String author = (String) entity.getProperty("author");
+    //     String url = (String) entity.getProperty("url");
+    //     String description = (String) entity.getProperty("desc");
+    //     String timestamp = (String) timeFormat.format(entity.getProperty("timeStamp"));
 
-        Meme memeObject = new Meme(id, author, url, description, timestamp);
-        memes.add(memeObject);
-    }
+    //     Meme memeObject = new Meme(id, author, url, description, timestamp);
+    //     memes.add(memeObject);
+    // }
 
-    response.setContentType("application/json;");
-    String json = gson.toJson(memes);
-    response.getWriter().println(json);
+    // response.setContentType("application/json;");
+    // String json = gson.toJson(memes);
+    // response.getWriter().println(json);
     }
 
 
@@ -86,9 +94,25 @@ public class MemeHandler extends HttpServlet {
 
     String author = currentUser.getEmail().split("@", 2)[0];
     String description = request.getParameter("message");
-    String imageUrl = getUploadedFileUrl(request, "file");
+    // String imageUrl = getUploadedFileUrl(request, "file");
     // Gives current time
     Date timeStamp = new Date();
+
+
+
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get("file");
+
+    if (blobKeys == null || blobKeys.isEmpty()) {
+        response.sendRedirect("/meme.html");
+        return;
+    } else {
+        // System.out.println("/meme-handler?blob-key=" + blobKeys.get(0).getKeyString());
+        // response.sendRedirect("/meme-handler?blob-key=" + blobKeys.get(0).getKeyString());
+        String imageUrl = "/meme-handler?blob-key=" + blobKeys.get(0).getKeyString();
+    }
+
+
 
     Entity memeEntity = new Entity("Meme");
     memeEntity.setProperty("author", author);
@@ -96,7 +120,6 @@ public class MemeHandler extends HttpServlet {
     memeEntity.setProperty("desc", description);
     memeEntity.setProperty("timeStamp", timeStamp);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(memeEntity);
     response.sendRedirect("/meme.html");
   }
