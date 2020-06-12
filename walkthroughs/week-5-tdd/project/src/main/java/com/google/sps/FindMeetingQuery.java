@@ -65,7 +65,7 @@ public final class FindMeetingQuery {
       }
       end = time.start();
 
-      if (freeTime(start, end) > 0 && request.getDuration() <= freeTime(start, end)) {
+      if (end - start > 0 && request.getDuration() <= end - start) {
         meetingTimes.add(TimeRange.fromStartEnd(start, end, false));
       }
       start = time.end();
@@ -73,7 +73,7 @@ public final class FindMeetingQuery {
 
     end = TimeRange.END_OF_DAY;
 
-    if (request.getDuration() <= freeTime(start, end)) {
+    if (request.getDuration() <= end - start) {
       meetingTimes.add(TimeRange.fromStartEnd(start, end, true));
     }
     return new ArrayList<TimeRange>(meetingTimes);
@@ -87,15 +87,5 @@ public final class FindMeetingQuery {
     */
   public boolean checkRequired(Collection<String> inEvents, Collection<String> required) {
     return !Collections.disjoint(inEvents, required);
-  }
-
-
-  /**
-    * Return the amount of freeTime in between {@code start} and {@code end}.
-    * @param start The start time.
-    * @param end The end time.
-    */
-  public int freeTime(int start, int end) {
-      return end - start;
   }
 }
