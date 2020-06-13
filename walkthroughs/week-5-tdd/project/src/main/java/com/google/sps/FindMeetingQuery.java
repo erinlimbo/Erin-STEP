@@ -28,7 +28,6 @@ public final class FindMeetingQuery {
     List<TimeRange> unavailableTimes = new ArrayList<>();
     Collection<TimeRange> meetingTimes = new LinkedHashSet<>();
     int start = TimeRange.START_OF_DAY;
-    int end;
 
     // Add event time to unavailable times if the event contains a required person.
     for (Event event : events) {
@@ -44,6 +43,8 @@ public final class FindMeetingQuery {
     // Loop through unavailable times to find potential meeting times
     for (int i = 0; i < unavailableTimes.size(); i++) {
       TimeRange time = unavailableTimes.get(i);
+      int end = time.start();
+
 
       if (i < unavailableTimes.size() - 1) {
         TimeRange nextTime = unavailableTimes.get(i + 1);
@@ -63,7 +64,6 @@ public final class FindMeetingQuery {
       if (time.start() == 0) {
         start = time.end();
       }
-      end = time.start();
 
       if (end - start > 0 && request.getDuration() <= end - start) {
         meetingTimes.add(TimeRange.fromStartEnd(start, end, false));
@@ -71,10 +71,8 @@ public final class FindMeetingQuery {
       start = time.end();
     }
 
-    end = TimeRange.END_OF_DAY;
-
-    if (request.getDuration() <= end - start) {
-      meetingTimes.add(TimeRange.fromStartEnd(start, end, true));
+    if (request.getDuration() <= TimeRange.END_OF_DAY - start) {
+      meetingTimes.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
     }
     return new ArrayList<TimeRange>(meetingTimes);
   }
