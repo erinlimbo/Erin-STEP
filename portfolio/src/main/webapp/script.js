@@ -132,15 +132,17 @@ async function loadMemePage() {
 /** Loads the memes from the page. */
 async function loadMemes() {
     const memeContainer = document.getElementById("meme-container");
+    
     const response = await fetch('/meme-handler');
     const data = await response.json();
     data.forEach(memeObject => {
+
         const memeDiv = document.createElement("div");
         const memeImg = document.createElement("img");
         const icon = document.createElement("button");
         const memeDesc = document.createElement("p");
 
-        memeImg.src = memeObject.url; 
+        memeImg.src = "/blob-serve-url?blob-key=" + memeObject.url; 
         memeImg.classList.add("meme-image");
         memeDesc.innerHTML = memeObject.desc
 
