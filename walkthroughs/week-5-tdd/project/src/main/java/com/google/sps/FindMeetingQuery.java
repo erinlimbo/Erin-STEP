@@ -14,10 +14,76 @@
 
 package com.google.sps;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+    List<TimeRange> unavailableTimes = new ArrayList<>();
+    Collection<TimeRange> meetingTimes = new LinkedHashSet<>();
+    int start = TimeRange.START_OF_DAY;
+
+    // Add event time to unavailable times if the event contains a required person.
+    for (Event event : events) {
+        if (!checkRequired(event.getAttendees(), request.getAttendees())) {
+            continue;
+        }
+        unavailableTimes.add(event.getWhen());
+    }
+
+    // Sort unavailable times by their start times.
+    Collections.sort(unavailableTimes);
+
+    // Loop through unavailable times to find potential meeting times
+    for (int i = 0; i < unavailableTimes.size(); i++) {
+      TimeRange time = unavailableTimes.get(i);
+      int end = time.start();
+
+
+      if (i < unavailableTimes.size() - 1) {
+        TimeRange nextTime = unavailableTimes.get(i + 1);
+
+        // Combine current and next times into one time.
+        if (time.overlaps(nextTime)) {
+            int earliest = Math.min(time.start(), nextTime.start());
+            int latest = Math.max(time.end(), nextTime.end());
+
+            time = TimeRange.fromStartEnd(earliest, latest, false);
+            i++;
+        }
+      }
+
+      // If the event starts in the beggining of the day, make the 
+      // first possible start at the end of this event. 
+      if (time.start() == 0) {
+        start = time.end();
+      }
+
+      if (end - start > 0 && request.getDuration() <= end - start) {
+        meetingTimes.add(TimeRange.fromStartEnd(start, end, false));
+      }
+      start = time.end();
+    }
+
+    if (request.getDuration() <= TimeRange.END_OF_DAY - start) {
+      meetingTimes.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
+    }
+    return new ArrayList<TimeRange>(meetingTimes);
+  }
+
+  /** 
+    * Return true iff any person in {@code inEvents} are contained in
+    * {@code required}.
+    * @param inEvents list of people that are in an event.
+    * @param required list of people that are required to attend the requested meeting.
+    */
+  public boolean checkRequired(Collection<String> inEvents, Collection<String> required) {
+    return !Collections.disjoint(inEvents, required);
   }
 }
