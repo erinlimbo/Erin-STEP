@@ -52,80 +52,68 @@ public class MemeHandler extends HttpServlet {
   /** Date formatter. */
   private final SimpleDateFormat timeFormat = new SimpleDateFormat("EEE, MMM d, yyy", Locale.US);
 
+  /** The Blobstore Service. */
+  private final BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+
+  /** Get the datastore. */
+  private final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
   /** Read the data from the datastore and write it into /meme-handler as json. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
     Query query = new Query("Meme").addSort("timeStamp", SortDirection.DESCENDING);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     List<Entity> resultsList = results.asList(FetchOptions.Builder.withLimit(maxMemes));
 
     List<Meme> memes = new ArrayList<>();
     for (Entity entity : resultsList) {
-        long id = entity.getKey().getId();
-        String author = (String) entity.getProperty("author");
-        String url = (String) entity.getProperty("url");
-        String description = (String) entity.getProperty("desc");
-        String timestamp = (String) timeFormat.format(entity.getProperty("timeStamp"));
+      long id = entity.getKey().getId();
+      String author = (String) entity.getProperty("author");
+      String url = (String) entity.getProperty("url");
+      String description = (String) entity.getProperty("desc");
+      String timestamp = (String) timeFormat.format(entity.getProperty("timeStamp"));
 
-        Meme memeObject = new Meme(id, author, url, description, timestamp);
-        memes.add(memeObject);
+      Meme memeObject = new Meme(id, author, url, description, timestamp);
+      memes.add(memeObject);
     }
 
     response.setContentType("application/json;");
     String json = gson.toJson(memes);
     response.getWriter().println(json);
+
     }
 
 
-    /** Receive a meme and upload its data to the datastore. */
+  /** Receive a meme and upload its data to the datastore. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     User currentUser = userService.getCurrentUser();
 
     String author = currentUser.getEmail().split("@", 2)[0];
     String description = request.getParameter("message");
-    String imageUrl = getUploadedFileUrl(request, "file");
+    String blobKeyString;
     // Gives current time
     Date timeStamp = new Date();
 
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get("file");
+
+    if (blobKeys == null || blobKeys.isEmpty()) {
+        response.sendRedirect("/meme.html");
+        return;
+    } else {
+        blobKeyString = blobKeys.get(0).getKeyString();
+    }
+
     Entity memeEntity = new Entity("Meme");
     memeEntity.setProperty("author", author);
-    memeEntity.setProperty("url", imageUrl);
+    memeEntity.setProperty("url", blobKeyString);
     memeEntity.setProperty("desc", description);
     memeEntity.setProperty("timeStamp", timeStamp);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(memeEntity);
     response.sendRedirect("/meme.html");
-  }
-
-  private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
-    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
-    List<BlobKey> blobKeys = blobs.get(formInputElementName);
-
-    if (blobKeys == null || blobKeys.isEmpty()) {
-      return null;
-    }
-
-    BlobKey blobKey = blobKeys.get(0);
-
-    BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
-    if (blobInfo.getSize() == 0) {
-      blobstoreService.delete(blobKey);
-      return null;
-    }
-
-    ImagesService imagesService = ImagesServiceFactory.getImagesService();
-    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
-
-    try {
-      URL url = new URL(imagesService.getServingUrl(options));
-      return url.getPath();
-    } catch (MalformedURLException e) {
-      return imagesService.getServingUrl(options);
-    }
   }
 }
