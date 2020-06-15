@@ -25,5 +25,5 @@ public class BlobServe extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     BlobKey blobKey = new BlobKey(request.getParameter("blob-key"));
     blobstoreService.serve(blobKey, response);
-    }
+  }
 }
