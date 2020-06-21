@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>My Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.e308ff8e.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body onload="loadMemePage()">
+      <script src="/script.75da7f30.js"></script>
+        <div id="header">
+            <div class="headBox"> <a href="/index.html"> Home </a> </div>
+            <div class="headBox"> <a href="/team.html"> My Team </a> </div>
+            <div class="headBox"> <a href="/meme.html"> Memes </a> </div>
+        </div>
+        <div id="content-container">
+            <h1> Welcome to the Meme Page! </h1>
+            <h3> (I love memes) </h3>
+        
+            <div id="upload-box">
+                <p> Upload a meme! </p>
+                <form id="meme-form" method="post" enctype="multipart/form-data" autocomplete="off">
+                    <input type="text" name="message" placeholder="write something about this" maxlength="120">
+                    <input type="file" name="file">
+                    <br>
+                </form>    
+                <input type="submit" form="meme-form">
+                <button id="delete-comments" onclick="deleteMemes()"> Delete Memes </button>
+            </div>
+
+            <div id="meme-container"></div>
+        </div>
+
+        <div id="footer">
+            <a href="https://www.linkedin.com/in/erinlimbo/" target="_blank"> <img class="foot" src="/linkedin.03aad0ec.png" alt="LinkedIn"></a>
+            <a href="https://github.com/erinlimbo" target="_blank"> <img class="foot" src="/github.0512e05a.png" alt="Github"> </a>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>My Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body onload="loadHomePage()">
+
+    <div id="header">
+        <div class="headBox"> <a href="index.html"> Home </a> </div>
+        <div class="headBox"> <a href="team.html"> My Team </a> </div>
+        <div class="headBox"> <a href="meme.html"> Memes </a> </div>
+        <div class="headBox" id="logging"> <a id="log-link"> </a> </div>
+    </div>
+    <div id="page">
+        <div id="content-container">
+            <h1>Erin's Portfolio</h1>
+            <p>This is my portfolio.</p>
+            <p>Click here to see yours truly :)</p>
+            <button id="erin-button" onclick='showPicture("erin", "erin-button")'>See me!</button>
+            <div id="content">
+                <div> <img class="portrait" id="erin" src="images/erin.JPG"/> </div>
+                <div class="bio-container">
+                    <div class="bio"> 
+                        <p> Hey there! Thanks for stopping by! My name is Erin Limbo, 
+                        I am an incoming sophomore studying Computer Science at UC Berkeley. This summer
+                        I will be participitating ing Google's STEP intern program. </p>
+                        <p> Things have changed since the 'Rona came around. I will no longer be working on Google's Mountain View
+                        campus. That was pretty upsetting news. Then, our project got changed form its original plans and now we can 
+                        not use Google's code base. Also upsetting, but nonetheless I am excited for the rest of this summer. I can't wait 
+                        to learn, meet new people, and enjoy my passion to its fullest. </p>
+                    </div>
+
+                    <div id="projects">
+                    <h3>
+                        My favorite projects: <button id="project-button" onclick="showProjects()"> See my projects! </button>
+                    </h3>
+                    <ul id="project-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="comments-container">
+            <div id="comments"></div>
+            <div id="input-form">
+                <form action="/data" method="POST" autocomplete="off" id="sendComment">
+                    <input type="text" id = "comment-text" name="comment-text" 
+                        placeholder="Comment..." minlength="1" maxlength="120" required> <br/>
+                </form>
+                <input type="submit" value="Submit Comment" form="sendComment"/>
+                <button id="delete-comments" onclick="deleteComments()"> Delete Comments </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="footer">
+        <a href="https://www.linkedin.com/in/erinlimbo/" target="_blank"> <img class="foot" src="images/linkedin.png" alt="LinkedIn"/></a>
+        <a href="https://github.com/erinlimbo" target="_blank"> <img class="foot" src="images/github.png" alt="Github" /> </a>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
