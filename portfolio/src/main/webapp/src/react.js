@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "bootstrap/dist/css/bootstrap.css";
 
-import AppContainer from "./AppContainer"
+import Counters from "./components/counters";
 
-ReactDOM.render(<AppContainer />, document.getElementById("root"));
+ReactDOM.render(<Counters />, document.getElementById("root"));
