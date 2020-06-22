@@ -24,7 +24,6 @@ class Counters extends Component {
             counter={counter}
           />
         ))}
-        ;
       </div>
     );
   }
@@ -39,7 +38,6 @@ class Counters extends Component {
     const index = counters.indexOf(counter);
     counters[index] = { ...counter };
     counters[index].value++;
-    console.log(counters);
     this.setState({ counters });
   };
 }
