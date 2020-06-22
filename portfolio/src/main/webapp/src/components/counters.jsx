@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Counter from "./counter";
+import { useSelector } from "react-redux";
 
 class Counters extends Component {
   state = {
@@ -29,6 +30,10 @@ class Counters extends Component {
   }
 
   handleDelete = (counterId) => {
+    const counterNum = useSelector((state) => state.counter);
+
+    console.log("hello " + { counterNum });
+
     const counters = this.state.counters.filter((c) => c.id !== counterId);
     this.setState({ counters });
   };
