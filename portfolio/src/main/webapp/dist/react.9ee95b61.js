@@ -29112,6 +29112,9 @@ var counterReducer = function counterReducer() {
     case "INCREMENT":
       return state + 1;
 
+    case "DECREMENT":
+      return state - 1;
+
     default:
       return state;
   }
@@ -32067,7 +32070,68 @@ var NavBar = /*#__PURE__*/function (_Component) {
 
 var _default = NavBar;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"actions/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.decrement = exports.increment = void 0;
+
+var increment = function increment() {
+  return {
+    type: "INCREMENT"
+  };
+};
+
+exports.increment = increment;
+
+var decrement = function decrement() {
+  return {
+    type: "DECREMENT"
+  };
+};
+
+exports.decrement = decrement;
+},{}],"components/value.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _index = require("../actions/index");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function Value() {
+  var counter = (0, _reactRedux.useSelector)(function (state) {
+    return state.counter;
+  });
+  var dispatch = (0, _reactRedux.useDispatch)();
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "increment"
+  }, /*#__PURE__*/_react.default.createElement("h1", null, "Counter: ", counter, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: function onClick() {
+      return dispatch((0, _index.increment)());
+    }
+  }, "+"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: function onClick() {
+      return dispatch((0, _index.decrement)());
+    }
+  }, "-")));
+}
+
+var _default = Value;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../actions/index":"actions/index.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32080,6 +32144,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _counters = _interopRequireDefault(require("./components/counters"));
 
 var _navbar = _interopRequireDefault(require("./components/navbar"));
+
+var _value = _interopRequireDefault(require("./components/value"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32125,7 +32191,7 @@ var App = /*#__PURE__*/function (_Component) {
     value: function render() {
       return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_navbar.default, null), /*#__PURE__*/_react.default.createElement("main", {
         className: "container"
-      }, /*#__PURE__*/_react.default.createElement(_counters.default, null)));
+      }, /*#__PURE__*/_react.default.createElement(_counters.default, null), /*#__PURE__*/_react.default.createElement(_value.default, null)));
     }
   }]);
 
@@ -32134,7 +32200,7 @@ var App = /*#__PURE__*/function (_Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./components/counters":"components/counters.jsx","./components/navbar":"components/navbar.jsx"}],"react.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./components/counters":"components/counters.jsx","./components/navbar":"components/navbar.jsx","./components/value":"components/value.jsx"}],"react.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -32152,12 +32218,6 @@ var _reactRedux = require("react-redux");
 var _App = _interopRequireDefault(require("./App"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var increment = function increment() {
-  return {
-    type: "INCREMENT"
-  };
-};
 
 var store = (0, _redux.createStore)(_reducers.default, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
@@ -32192,7 +32252,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39615" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40835" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
